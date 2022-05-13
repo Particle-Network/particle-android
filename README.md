@@ -1,12 +1,12 @@
 # Particle Android
 
-This repository contains [Auth Service](https://docs.particle.network/auth-service/introduction) and [Wallet Service](https://docs.particle.network/wallet-service/introduction) sample source. It support Solana and EVM chian, More features coming soon! Learn more visit [Particle Network](https://website.particle.network/).
+This repository contains [Auth Service](https://docs.particle.network/auth-service/introduction) and [Wallet Service](https://docs.particle.network/wallet-service/introduction) sample source. It supports Solana now, more chains and more features coming soon! Learn more visit [Particle Network](https://docs.particle.network/).
 
 ## Getting Started
 
-* clone the repo.
-* create `local.properties` in project root dir if not exist.
-* add below particle sdk config.   
+* Clone the repo.
+* Create `local.properties` in project root dir if not exist.
+* Add below particle sdk config.   
 
 ```
 particle.network.project_id=xxx  
