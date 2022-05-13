@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        >
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+        tools:context="com.particle.demo.ui.MainActivity"
+            >
+
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/wallet_bg"
+                />
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/logo"
+                />
+
+        <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="240dp"
+                android:src="@drawable/icon"
+                />
+
+        <LinearLayout
+                android:id="@+id/welcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="240dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/welcome"
+                    />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome"
+                    android:textColor="#000000"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    />
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:id="@+id/login_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="120dp"
+                android:orientation="vertical"
+                >
+
+            <Button
+                    android:id="@+id/email_login"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/email_login"
+                    />
+
+            <Button
+                    android:id="@+id/phone_login"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="16dp"
+                    android:text="@string/phone_login"
+                    />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:id="@+id/login_success"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="120dp"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:visibility="gone"
+                >
+
+            <Button
+                    android:id="@+id/open_wallet"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/open_wallet"
+                    />
+
+            <Button
+                    android:id="@+id/logout"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="16dp"
+                    android:text="@string/logout"
+                    />
+
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/chain"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="-50dp"
+                android:background="@android:color/holo_red_dark"
+                android:gravity="center"
+                android:rotation="45"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="solana\nMainDev"
+                />
+
+
+    </RelativeLayout>
+</layout>

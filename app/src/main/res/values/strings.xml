@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Particle Wallet</string>
+    <string name="email_login">Email Login</string>
+    <string name="phone_login">Phone Login</string>
+    <string name="open_wallet">Open Wallet</string>
+    <string name="logout">Logout</string>
+    <string name="welcome">Welcome !</string>
+</resources>

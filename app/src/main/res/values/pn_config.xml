@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Production-->
+    <!--    <string name="pn_project_id">34c6b829-5b89-44e8-90a9-6d982787b9c9</string>-->
+    <!--    <string name="pn_project_client_key">c6Z44Ml4TQeNhctvwYgdSv6DBzfjf6t6CB0JDscR</string>-->
+    <!--    <string name="pn_app_id">253635b6-a803-448f-b852-a97e037001a8</string>-->
+    <!--    <string name="pn_scheme">pn253635b6-a803-448f-b852-a97e037001a8</string>-->
+
+    <!--    TEST-->
+    <string name="pn_project_id">fa0fe0e8-f1bb-47ff-88bb-4fa31711e7b3</string>
+    <string name="pn_project_client_key">cKtHdeHis0ghNom64w7mdNkGYX5rmRr0jLlIKatY</string>
+    <string name="pn_app_id">193b1249-7631-4e18-893a-7149a2f229f8</string>
+    <string name="pn_scheme">pn193b1249-7631-4e18-893a-7149a2f229f8</string>
+
+</resources>
