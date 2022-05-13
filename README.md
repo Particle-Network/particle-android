@@ -13,7 +13,7 @@ particle.network.project_id=xxx
 particle.network.project_client_key=xxx      
 particle.network.app_id=xxx
 ```
-Replace `xxx` with the new values created in your Dashboard.
+Replace `xxx` with the new values created in the [Dashboard](https://particle.network/#/login).
 
 ## Build
 ```
