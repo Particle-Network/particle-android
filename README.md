@@ -6,7 +6,7 @@ This repository contains [Auth Service](https://docs.particle.network/auth-servi
 
 * Clone the repo.
 * Create `local.properties` in project root dir if not exist.
-* Add below particle sdk config.   
+* Add below particle sdk config to `local.properties`.   
 
 ```
 particle.network.project_id=xxx  
