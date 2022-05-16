@@ -112,8 +112,7 @@ class APIReferenceActivity : AppCompatActivity() {
             // PNRouter.build(RouterPath.TokenTransactionRecords, params).navigation()
 
             //open default token transaction records by chain name
-            // PNRouter.build(RouterPath.TokenTransactionRecords).navigation()
-            showToast(getString(R.string.api_tips))
+             PNRouter.build(RouterPath.TokenTransactionRecords).navigation()
         }
     }
 
