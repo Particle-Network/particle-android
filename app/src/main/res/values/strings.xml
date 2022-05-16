@@ -5,4 +5,14 @@
     <string name="open_wallet">Open Wallet</string>
     <string name="logout">Logout</string>
     <string name="welcome">Welcome !</string>
+    <string name="api_reference">API Reference</string>
+    <string name="api_tips">Please check the DEMO source code</string>
+    <string name="auth_service">Auth Service</string>
+    <string name="wallet_service">Wallet Service</string>
+    <string name="sign_send_transaction">Sign And SendTransaction</string>
+    <string name="sign_transaction">Sign Transaction</string>
+    <string name="sign_message">Sign Message</string>
+    <string name="open_send_token">Open Send Token</string>
+    <string name="open_receive_token">Open Receive Token</string>
+    <string name="open_transaction_records">Open Transaction Records</string>
 </resources>

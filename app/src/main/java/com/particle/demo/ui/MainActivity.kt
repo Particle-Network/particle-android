@@ -1,6 +1,7 @@
 package com.particle.demo.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -83,6 +84,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.chain.setOnClickListener {
             openSelectChain()
+        }
+        binding.apiReference.setOnClickListener {
+            startActivity(Intent(this@MainActivity,APIReferenceActivity::class.java))
         }
     }
 

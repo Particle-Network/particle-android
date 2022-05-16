@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:id="@+id/login_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            tools:context="com.particle.demo.ui.MainActivity"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="left"
+                android:text="@string/auth_service"
+                android:textColor="@android:color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                />
+
+            <Button
+                android:id="@+id/sign_send_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/sign_send_transaction"
+                />
+
+            <Button
+                android:id="@+id/sign_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/sign_transaction"
+                />
+
+            <Button
+                android:id="@+id/sign_message"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/sign_message"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="left"
+                android:text="@string/wallet_service"
+                android:textColor="@android:color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                />
+
+            <Button
+                android:id="@+id/open_wallet"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/open_wallet"
+                />
+
+            <Button
+                android:id="@+id/open_send_token"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/open_send_token"
+                />
+
+            <Button
+                android:id="@+id/open_receive_token"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/open_receive_token"
+                />
+
+            <Button
+                android:id="@+id/open_transaction_records"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/open_transaction_records"
+                />
+        </LinearLayout>
+
+    </ScrollView>
+</layout>
