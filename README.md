@@ -30,7 +30,7 @@ Replace `xxx` with the new values created in the [Dashboard](https://particle.ne
 ## Give Feedback
 Please report bugs or issues to [particle-android/issues](https://github.com/Particle-Network/particle-android/issues)
 
-You can also join our [Discord](https://discord.com/invite/qwysge6cgF).
+You can also join our [Discord](https://discord.gg/2y44qr6CR2).
 
 
 
