@@ -6,20 +6,18 @@ import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.minijoy.demo.R
 import com.minijoy.demo.databinding.ActivityApiRefListBinding
 import com.particle.gui.router.PNRouter
 import com.particle.gui.router.RouterPath
-import com.particle.network.ChainId
-import com.particle.network.ChainName
 import com.particle.network.ParticleNetwork
-import com.particle.network.infrastructure.net.data.SerializeTokenTransReq
-import com.particle.network.service.LoginType
+import com.particle.network.infrastructure.net.data.SerializeSOLTransReq
 import com.particle.network.service.WebServiceCallback
-import com.particle.network.service.model.LoginOutput
 import com.particle.network.service.model.SignOutput
-import com.particle.network.service.model.WebOutput
 import com.particle.network.service.model.WebServiceError
+import kotlinx.coroutines.launch
+import kotlin.math.pow
 
 
 class APIReferenceActivity : AppCompatActivity() {
@@ -37,56 +35,78 @@ class APIReferenceActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
+
         //Auth Service
         binding.signSendTransaction.setOnClickListener {
-            /**
-            //step 1
-            val req = SerializeTokenTransReq("sender","receiver","mint",amount)
-            ParticleNetwork.getSolanaService().enhancedSerializeTransaction(req)
-            //step 2
-            //transaction: base58 string from step 1 response
-            ParticleNetwork.signAndSendTransaction(this@APIReferenceActivity, "", object : WebServiceCallback<SignOutput>{
-            override fun success(output: SignOutput) {
-            //sign and send transaction success
-            }
 
-            override fun failure(errMsg: WebServiceError) {
-            // handle error
+            lifecycleScope.launch {
+                val req = SerializeSOLTransReq(
+                    ParticleNetwork.getPublicKey(),
+                    "BBBsMq9cEgRf9jeuXqd6QFueyRDhNwykYz63s1vwSCBZ",
+                    2 * 10.0.pow(9.0).toLong()
+                )
+                val result =
+                    ParticleNetwork.getSolanaService().enhancedSerializeTransaction(req).result
+                val message = result.encodedTransactionSerializeMessage
+                ParticleNetwork.signAndSendTransaction(
+                    this@APIReferenceActivity,
+                    message,
+                    object : WebServiceCallback<SignOutput> {
+
+                        override fun success(output: SignOutput) {
+                            showToast(getString(R.string.success))
+                        }
+
+                        override fun failure(errMsg: WebServiceError) {
+                            showToast(getString(R.string.failed))
+                        }
+                    })
             }
-            })
-             **/
-            showToast(getString(R.string.api_tips))
         }
         binding.signTransaction.setOnClickListener {
-            /**
-            //transaction: base58 string
-            ParticleNetwork.signTransaction(activity, transaction, object : WebServiceCallback<SignOutput>{
-            override fun success(output: SignOutput) {
-            //sign transaction success
+
+            lifecycleScope.launch {
+
+                val req = SerializeSOLTransReq(
+                    ParticleNetwork.getPublicKey(),
+                    "BBBsMq9cEgRf9jeuXqd6QFueyRDhNwykYz63s1vwSCBZ",
+                    2 * 10.0.pow(9.0).toLong()
+                )
+                val result =
+                    ParticleNetwork.getSolanaService().enhancedSerializeTransaction(req).result
+                val message = result.encodedTransactionSerializeMessage
+                //transaction: base58 string
+                ParticleNetwork.signTransaction(
+                    this@APIReferenceActivity,
+                    message,
+                    object : WebServiceCallback<SignOutput> {
+                        override fun success(output: SignOutput) {
+                            //sign transaction success
+                        }
+
+                        override fun failure(errMsg: WebServiceError) {
+                            // handle error
+                        }
+                    })
             }
 
-            override fun failure(errMsg: WebServiceError) {
-            // handle error
-            }
-            })
-             */
-            showToast(getString(R.string.api_tips))
         }
 
         binding.signMessage.setOnClickListener {
-            /**
             //sign any string
-            ParticleNetwork.signMessage(activity, message, object : WebServiceCallback<SignOutput>{
-            override fun success(output: SignOutput) {
-            //sign success
-            }
+            ParticleNetwork.signMessage(
+                this@APIReferenceActivity,
+                "your message",
+                object : WebServiceCallback<SignOutput> {
+                    override fun success(output: SignOutput) {
+                        //sign success
+                    }
 
-            override fun failure(errMsg: WebServiceError) {
-            // handle error
-            }
-            })
-             */
-            showToast(getString(R.string.api_tips))
+                    override fun failure(errMsg: WebServiceError) {
+                        // handle error
+                    }
+                })
+
         }
         //Wallet Service
         binding.openWallet.setOnClickListener {
@@ -112,7 +132,17 @@ class APIReferenceActivity : AppCompatActivity() {
             // PNRouter.build(RouterPath.TokenTransactionRecords, params).navigation()
 
             //open default token transaction records by chain name
-             PNRouter.build(RouterPath.TokenTransactionRecords).navigation()
+            PNRouter.build(RouterPath.TokenTransactionRecords).navigation()
+        }
+        binding.openNftDetails.setOnClickListener {
+//            val params = NftDetailParams()
+//            PNRouter.build(RouterPath.NftDetails, params).navigation()
+            showToast(getString(R.string.api_tips))
+        }
+        binding.openNftSend.setOnClickListener {
+//            val params = NftDetailParams(mint， receiver)
+//            PNRouter.build(RouterPath.NftSend).navigation()
+            showToast(getString(R.string.api_tips))
         }
     }
 

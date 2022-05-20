@@ -9,10 +9,16 @@
     <string name="api_tips">Please check the DEMO source code</string>
     <string name="auth_service">Auth Service</string>
     <string name="wallet_service">Wallet Service</string>
-    <string name="sign_send_transaction">Sign And SendTransaction</string>
+    <string name="sign_send_transaction">Sign And Send Transaction</string>
     <string name="sign_transaction">Sign Transaction</string>
     <string name="sign_message">Sign Message</string>
     <string name="open_send_token">Open Send Token</string>
     <string name="open_receive_token">Open Receive Token</string>
     <string name="open_transaction_records">Open Transaction Records</string>
+    <string name="open_nft_details">Open NFT Details</string>
+    <string name="open_nft_send">Open NFT Send</string>
+    <string name="success">Success</string>
+    <string name="failed">Failed</string>
+    <string name="auth_tips">Just to demonstrate the functionality, you need to fill in the correct parameters in the source code to display the correct data</string>
+
 </resources>
