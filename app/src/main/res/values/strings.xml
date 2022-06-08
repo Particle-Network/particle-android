@@ -1,4 +1,7 @@
 <resources>
+    <string name="add_token">Add Token</string>
+    <string name="add_nft">Add NFT</string>
+
     <string name="app_name">Particle Wallet</string>
     <string name="email_login">Email Login</string>
     <string name="phone_login">Phone Login</string>
@@ -21,4 +24,10 @@
     <string name="failed">Failed</string>
     <string name="auth_tips">Just to demonstrate the functionality, you need to fill in the correct parameters in the source code to display the correct data</string>
 
+    <string name="solana">Solana</string>
+    <string name="ethereum">Ethereum</string>
+    <string name="ethereum_chains">EVM-Chains</string>
+    <string name="bsc">Bsc</string>
+    <string name="polygon">Polygon</string>
+    <string name="avalanche">Avalanche</string>
 </resources>

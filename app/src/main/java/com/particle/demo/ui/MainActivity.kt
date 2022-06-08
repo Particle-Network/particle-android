@@ -8,13 +8,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.blankj.utilcode.util.LogUtils
 import com.minijoy.demo.R
 import com.minijoy.demo.databinding.ActivityMainBinding
+import com.particle.base.*
 import com.particle.gui.router.PNRouter
 import com.particle.gui.router.RouterPath
-import com.particle.network.ChainId
-import com.particle.network.ChainName
-import com.particle.network.ParticleNetwork
+import com.particle.network.ParticleNetworkAuth.isLogin
+import com.particle.network.ParticleNetworkAuth.login
+import com.particle.network.ParticleNetworkAuth.logout
+import com.particle.network.ParticleNetworkAuth.setChainInfo
 import com.particle.network.service.LoginType
 import com.particle.network.service.WebServiceCallback
 import com.particle.network.service.model.LoginOutput
@@ -28,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     private val chainInfos = mutableListOf<ChainInfo>()
 
-    private var selectChain = 2
+    private var selectChain = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,17 +42,55 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setData() {
-        selectChain = getSharedPreferences("main", Context.MODE_PRIVATE).getInt(
+        selectChain = getSharedPreferences(
+            "main_${!ParticleNetwork.isEvmChain()}",
+            Context.MODE_PRIVATE
+        ).getInt(
             "select_chain",
             selectChain
         )
-        chainInfos.add(ChainInfo(ChainName.Solana, ChainId.SolanaMainnet))
-        chainInfos.add(ChainInfo(ChainName.Solana, ChainId.SolanaTestnet))
-        chainInfos.add(ChainInfo(ChainName.Solana, ChainId.SolanaDevnet))
+        if (!ParticleNetwork.isEvmChain()) {
+            chainInfos.add(SolanaChain(SolanaChainId.Mainnet))
+            chainInfos.add(SolanaChain(SolanaChainId.Testnet))
+            chainInfos.add(SolanaChain(SolanaChainId.Devnet))
+            if (selectChain > 2) {
+                selectChain = 0
+            }
+        } else {
+            chainInfos.add(EthereumChain(EthereumChainId.Mainnet))
+            chainInfos.add(EthereumChain(EthereumChainId.TestnetKovan))
+            chainInfos.add(BscChain(BscChainId.Mainnet))
+            chainInfos.add(BscChain(BscChainId.Testnet))
+            chainInfos.add(PolygonChain(PolygonChainId.Mainnet))
+            chainInfos.add(PolygonChain(PolygonChainId.TestnetMumbai))
+            chainInfos.add(AvalancheChain(AvalancheChainId.Mainnet))
+            chainInfos.add(AvalancheChain(AvalancheChainId.Testnet))
+
+            chainInfos.add(MoonbeamChain(MoonbeamChainId.Mainnet))
+            chainInfos.add(MoonbeamChain(MoonbeamChainId.Testnet))
+
+            chainInfos.add(MoonriverChain(MoonriverChainId.Mainnet))
+            chainInfos.add(MoonriverChain(MoonriverChainId.Testnet))
+
+            chainInfos.add(HecoChain(HecoChainId.Mainnet))
+            chainInfos.add(HecoChain(HecoChainId.Testnet))
+
+            chainInfos.add(FantomChain(FantomChainId.Mainnet))
+            chainInfos.add(FantomChain(FantomChainId.Testnet))
+
+            chainInfos.add(ArbitrumChain(ArbitrumChainId.Mainnet))
+            chainInfos.add(ArbitrumChain(ArbitrumChainId.Testnet))
+
+            chainInfos.add(HarmonyChain(HarmonyChainId.Mainnet))
+            chainInfos.add(HarmonyChain(HarmonyChainId.Testnet))
+
+            chainInfos.add(AuroraChain(AuroraChainId.Mainnet))
+            chainInfos.add(AuroraChain(AuroraChainId.Testnet))
+        }
 
         binding.chain.text =
-            chainInfos[selectChain].name.toString() + "\n" + chainInfos[selectChain].id.value
-        ParticleNetwork.setChainId(chainInfos[selectChain].id)
+            chainInfos[selectChain].chainName.toString() + "\n" + chainInfos[selectChain].chainId.toString()
+        ParticleNetwork.setChainInfo(chainInfos[selectChain])
     }
 
     private fun refreshUIState() {
@@ -58,6 +99,9 @@ class MainActivity : AppCompatActivity() {
             binding.loginLayout.visibility = View.GONE
             binding.welcome.visibility = View.VISIBLE
             binding.icon.visibility = View.GONE
+            if (ParticleNetwork.isEvmChain()) {
+                binding.apiReference.visibility = View.GONE
+            }
         } else {
             binding.loginSuccess.visibility = View.GONE
             binding.loginLayout.visibility = View.VISIBLE
@@ -80,13 +124,15 @@ class MainActivity : AppCompatActivity() {
 
         binding.logout.setOnClickListener {
             logout()
+
         }
 
         binding.chain.setOnClickListener {
             openSelectChain()
         }
+
         binding.apiReference.setOnClickListener {
-            startActivity(Intent(this@MainActivity,APIReferenceActivity::class.java))
+            startActivity(Intent(this@MainActivity, APIReferenceActivity::class.java))
         }
     }
 
@@ -126,11 +172,17 @@ class MainActivity : AppCompatActivity() {
         alertDialog.setTitle("Choose Chain")
 
         val listItems =
-            chainInfos.map { it.name.toString() + "-" + it.id.value }.toTypedArray()
+            chainInfos.map {
+                it.chainName.toString()
+                    .replaceFirstChar { it.uppercase() } + "-" + it.chainId.toString() + "-" + it.chainId.value()
+            }.toTypedArray()
 
         alertDialog.setSingleChoiceItems(listItems, selectChain) { dialog, which ->
             selectChain = which
-            getSharedPreferences("main", Context.MODE_PRIVATE).edit()
+            getSharedPreferences(
+                "main_${!ParticleNetwork.isEvmChain()}",
+                Context.MODE_PRIVATE
+            ).edit()
                 .putInt("select_chain", selectChain).commit()
             chooseChain(chainInfos[which])
             dialog.dismiss()
@@ -140,7 +192,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun chooseChain(chain: ChainInfo) {
-        binding.chain.text = chain.name.toString() + "\n" + chain.id.value
-        ParticleNetwork.setChainId(chain.id)
+        binding.chain.text = chain.chainName.toString() + "\n" + chain.chainId.toString()
+        ParticleNetwork.setChainInfo(chain)
+        val isLogin = ParticleNetwork.isLogin()
+        LogUtils.d("isLogin:$isLogin")
+        refreshUIState()
     }
 }
