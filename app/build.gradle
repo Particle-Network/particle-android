@@ -58,11 +58,11 @@ def getLocalProperties() {
 dependencies {
 
     //particle auth service
-    implementation "network.particle:auth-service:0.0.5"
+    implementation "network.particle:auth-service:0.2.0"
     //particle api service
-    implementation "network.particle:api-service:0.0.5"
+    implementation "network.particle:api-service:0.2.0"
     //particle wallet service
-    implementation "network.particle:wallet-service:0.0.5"
+    implementation "network.particle:wallet-service:0.2.0"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
