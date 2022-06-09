@@ -28,6 +28,7 @@ Replace `xxx` with the new values created in the [Dashboard](https://particle.ne
 2. Logout.
 3. Open Wallet.
 4. Change Chain Id.
+5. Check our official dev docs: https://docs.particle.network/
 
 ## Docs
 1. https://docs.particle.network/auth-service/sdks/android
