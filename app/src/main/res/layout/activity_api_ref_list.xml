@@ -7,6 +7,13 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="isEvm"
+            type="Boolean"
+            />
+
     </data>
 
     <ScrollView
@@ -60,6 +67,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/sign_transaction"
+                android:visibility="@{isEvm?View.GONE:View.VISIBLE}"
                 />
 
             <Button
@@ -69,6 +77,62 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/sign_message"
                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="@{isEvm?View.VISIBLE:View.GONE}"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="left"
+                    android:text="@string/api_service"
+                    android:textColor="@android:color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    />
+
+                <Button
+                    android:id="@+id/erc20_transfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/erc20_transfer"
+                    />
+
+                <Button
+                    android:id="@+id/erc20_approve"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@string/erc20_approve"
+                    />
+
+                <Button
+                    android:id="@+id/erc20_transferFrom"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@string/erc20_transferFrom"
+                    />
+
+                <Button
+                    android:id="@+id/erc721_safeTransferFrom"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@string/erc721_safeTransferFrom"
+                    />
+
+                <Button
+                    android:id="@+id/erc1155_safeTransferFrom"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@string/erc1155_safeTransferFrom"
+                    />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"

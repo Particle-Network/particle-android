@@ -17,7 +17,6 @@ import com.particle.gui.router.RouterPath
 import com.particle.network.ParticleNetworkAuth.isLogin
 import com.particle.network.ParticleNetworkAuth.login
 import com.particle.network.ParticleNetworkAuth.logout
-import com.particle.network.ParticleNetworkAuth.setChainInfo
 import com.particle.network.service.LoginType
 import com.particle.network.service.WebServiceCallback
 import com.particle.network.service.model.LoginOutput

@@ -12,6 +12,7 @@
     <string name="api_tips">Please check the DEMO source code</string>
     <string name="auth_service">Auth Service</string>
     <string name="wallet_service">Wallet Service</string>
+    <string name="api_service">API Service</string>
     <string name="sign_send_transaction">Sign And Send Transaction</string>
     <string name="sign_transaction">Sign Transaction</string>
     <string name="sign_message">Sign Message</string>
@@ -30,4 +31,9 @@
     <string name="bsc">Bsc</string>
     <string name="polygon">Polygon</string>
     <string name="avalanche">Avalanche</string>
+    <string name="erc20_transfer">erc20Transfer</string>
+    <string name="erc20_approve">erc20Approve</string>
+    <string name="erc20_transferFrom">erc20TransferFrom</string>
+    <string name="erc721_safeTransferFrom">erc721SafeTransferFrom</string>
+    <string name="erc1155_safeTransferFrom">erc1155SafeTransferFrom</string>
 </resources>

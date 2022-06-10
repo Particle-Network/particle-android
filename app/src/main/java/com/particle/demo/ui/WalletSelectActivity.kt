@@ -7,7 +7,6 @@ import androidx.databinding.DataBindingUtil
 import com.minijoy.demo.R
 import com.minijoy.demo.databinding.ActivityWalletBinding
 import com.particle.base.*
-import com.particle.network.ParticleNetworkAuth.setChainInfo
 
 
 class WalletSelectActivity : AppCompatActivity() {
