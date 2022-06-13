@@ -98,9 +98,6 @@ class MainActivity : AppCompatActivity() {
             binding.loginLayout.visibility = View.GONE
             binding.welcome.visibility = View.VISIBLE
             binding.icon.visibility = View.GONE
-            if (ParticleNetwork.isEvmChain()) {
-                binding.apiReference.visibility = View.GONE
-            }
         } else {
             binding.loginSuccess.visibility = View.GONE
             binding.loginLayout.visibility = View.VISIBLE
