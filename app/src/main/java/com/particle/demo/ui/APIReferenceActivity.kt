@@ -131,7 +131,7 @@ class APIReferenceActivity : AppCompatActivity() {
                     2 * 10.0.pow(9.0).toLong()
                 )
                 val result =
-                    ParticleNetwork.solana.enhancedSerializeTransaction(req).result
+                    ParticleNetwork.solana.serializeTransaction(req).result
                 val message = result.encodedTransactionSerializeMessage
                 ParticleNetwork.signAndSendTransaction(
                     this@APIReferenceActivity,
@@ -178,7 +178,7 @@ class APIReferenceActivity : AppCompatActivity() {
                     2 * 10.0.pow(9.0).toLong()
                 )
                 val result =
-                    ParticleNetwork.solana.enhancedSerializeTransaction(req).result
+                    ParticleNetwork.solana.serializeTransaction(req).result
                 val message = result.encodedTransactionSerializeMessage
                 //transaction: base58 string
                 ParticleNetwork.signTransaction(
