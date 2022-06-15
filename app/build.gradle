@@ -56,7 +56,7 @@ def getLocalProperties() {
 }
 
 dependencies {
-    def sdkVersion = "0.2.2"
+    def sdkVersion = "0.2.3"
     //particle auth service
     implementation "network.particle:auth-service:$sdkVersion"
     //particle api service
