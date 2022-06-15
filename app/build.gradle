@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def sdkVersion = "0.2.3"
+
 Properties localProps = getLocalProperties()
 
 android {
@@ -13,7 +15,7 @@ android {
         minSdk 23
         targetSdk 31
         versionCode 2
-        versionName "0.2.2"
+        versionName "$sdkVersion"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -56,7 +58,6 @@ def getLocalProperties() {
 }
 
 dependencies {
-    def sdkVersion = "0.2.3"
     //particle auth service
     implementation "network.particle:auth-service:$sdkVersion"
     //particle api service
