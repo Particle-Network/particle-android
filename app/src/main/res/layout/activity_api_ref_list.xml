@@ -138,6 +138,12 @@
                     android:layout_height="50dp"
                     android:text="@string/custom_abi"
                     />
+                <Button
+                    android:id="@+id/rpc"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@string/rpc"
+                    />
             </LinearLayout>
 
 

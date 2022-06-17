@@ -27,6 +27,11 @@ import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import kotlin.math.pow
 
+data class ReadContractData(
+    val from: String,
+    val to: String,
+    val data: String,
+)
 
 class APIReferenceActivity : AppCompatActivity() {
 
@@ -195,10 +200,33 @@ class APIReferenceActivity : AppCompatActivity() {
                     LogUtils.d(iTxData, "hexData:${iTxData?.serialize()}")
                     ToastUtils.showLong("hexData:${iTxData?.serialize()}")
                 } catch (e: Exception) {
+                    e.printStackTrace()
                     ToastUtils.showLong(e.message)
                 }
 
             }
+        }
+        binding.rpc.setOnClickListener {
+            lifecycleScope.launch {
+                try {
+                    val from = ParticleNetwork.getAddress()
+                    val to = "0xAC6d81182998EA5c196a4424EA6AB250C7eb175b"
+                    val data = "0x"
+                    val txData = ReadContractData(from, to, data)
+                    // Integer block number, or the string 'latest', 'earliest' or 'pending'
+
+                    val quantity = "latest"
+                    val params= listOf(txData,quantity)
+                    val result = ParticleNetwork.evm.rpc("eth_call", params)
+                    ToastUtils.showLong(result.string())
+                }catch (e:Exception){
+                    e.printStackTrace()
+                    ToastUtils.showLong(e.message)
+                }
+
+            }
+
+
         }
 
         //Wallet Service
