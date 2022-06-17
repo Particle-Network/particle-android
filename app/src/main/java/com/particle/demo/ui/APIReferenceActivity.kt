@@ -5,15 +5,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.minijoy.demo.R
 import com.minijoy.demo.databinding.ActivityApiRefListBinding
+import com.particle.api.evm
 import com.particle.api.infrastructure.net.data.SerializeSOLTransReq
+import com.particle.api.service.data.ContractParams
 import com.particle.api.solana
 import com.particle.base.ParticleNetwork
 import com.particle.gui.router.PNRouter
 import com.particle.gui.router.RouterPath
-import com.particle.network.ParticleNetworkAuth.getPublicKey
+import com.particle.network.ParticleNetworkAuth.getAddress
 import com.particle.network.ParticleNetworkAuth.signAndSendTransaction
 import com.particle.network.ParticleNetworkAuth.signMessage
 import com.particle.network.ParticleNetworkAuth.signTransaction
@@ -21,6 +24,7 @@ import com.particle.network.service.WebServiceCallback
 import com.particle.network.service.model.SignOutput
 import com.particle.network.service.model.WebServiceError
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
 import kotlin.math.pow
 
 
@@ -48,25 +52,153 @@ class APIReferenceActivity : AppCompatActivity() {
         }
 
         //Api Service
+        val contractAddress = "0x84b9B910527Ad5C03A9Ca831909E21e236EA7b06"
+        val from = ParticleNetwork.getAddress()
+        val to = "0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa"
+        val amount = BigDecimal.valueOf(0.00001 * 10.0.pow(18.0)).toPlainString()
         binding.erc20Transfer.setOnClickListener {
 //            ParticleNetwork.evm.erc20Transfer(contractAddress = "",to="", amount = )
-            ToastUtils.showLong(getString(R.string.api_tips))
+            lifecycleScope.launch {
+                try {
+                    val contractParams = ContractParams.erc20Transform(contractAddress, to, amount)
+                    val iTxData = ParticleNetwork.evm.createTransaction(
+                        from,
+                        to,
+                        amount,
+                        type = "0x0",
+                        contractParams = contractParams
+                    )
+                    LogUtils.d(iTxData, "hexData:${iTxData?.serialize()}")
+                    ToastUtils.showLong("hexData:${iTxData?.serialize()}")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ToastUtils.showLong(e.message)
+                }
+
+            }
+
         }
         binding.erc20Approve.setOnClickListener {
 //            ParticleNetwork.evm.erc20Approve()
-            ToastUtils.showLong(getString(R.string.api_tips))
+            lifecycleScope.launch {
+                try {
+                    val contractParams = ContractParams.erc20Approve(contractAddress, to, amount)
+                    val iTxData = ParticleNetwork.evm.createTransaction(
+                        ParticleNetwork.getAddress(),
+                        to,
+                        amount,
+                        type = "0x0",
+                        contractParams = contractParams
+                    )
+                    LogUtils.d(iTxData, "hexData:${iTxData?.serialize()}")
+                    ToastUtils.showLong("hexData:${iTxData?.serialize()}")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ToastUtils.showLong(e.message)
+                }
+
+            }
         }
         binding.erc20TransferFrom.setOnClickListener {
 //            ParticleNetwork.evm.erc20TransferFrom()
-            ToastUtils.showLong(getString(R.string.api_tips))
+            lifecycleScope.launch {
+                try {
+                    val contractParams =
+                        ContractParams.erc20TransferFrom(contractAddress, from, to, amount)
+                    val iTxData = ParticleNetwork.evm.createTransaction(
+                        from,
+                        to,
+                        amount,
+                        type = "0x0",
+                        contractParams = contractParams
+                    )
+                    LogUtils.d(iTxData, "hexData:${iTxData?.serialize()}")
+                    ToastUtils.showLong("hexData:${iTxData?.serialize()}")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ToastUtils.showLong(e.message)
+                }
+
+            }
         }
         binding.erc721SafeTransferFrom.setOnClickListener {
 //            ParticleNetwork.evm.erc721SafeTransferFrom()
-            ToastUtils.showLong(getString(R.string.api_tips))
+//            ToastUtils.showLong(getString(R.string.api_tips))
+            lifecycleScope.launch {
+                try {
+                    val contractParams =
+                        ContractParams.erc721SafeTransferFrom(contractAddress, from, to, amount)
+                    val iTxData = ParticleNetwork.evm.createTransaction(
+                        from,
+                        to,
+                        amount,
+                        type = "0x0",
+                        contractParams = contractParams
+                    )
+                    LogUtils.d(iTxData, "hexData:${iTxData?.serialize()}")
+                    ToastUtils.showLong("hexData:${iTxData?.serialize()}")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ToastUtils.showLong(e.message)
+                }
+            }
         }
         binding.erc1155SafeTransferFrom.setOnClickListener {
 //            ParticleNetwork.evm.erc1155SafeTransferFrom()
+
+            lifecycleScope.launch {
+                try {
+                    val id = ""
+                    val data = "0x0"
+                    val contractParams =
+                        ContractParams.erc1155SafeTransferFrom(
+                            contractAddress,
+                            from,
+                            to,
+                            id,
+                            amount,
+                            data
+                        )
+                    val iTxData = ParticleNetwork.evm.createTransaction(
+                        ParticleNetwork.getAddress(),
+                        to,
+                        amount,
+                        type = "0x0",
+                        contractParams = contractParams
+                    )
+                    LogUtils.d(iTxData, "hexData:${iTxData?.serialize()}")
+                    ToastUtils.showLong("hexData:${iTxData?.serialize()}")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ToastUtils.showLong(e.message)
+                }
+            }
+
+        }
+        binding.customAbi.setOnClickListener {
             ToastUtils.showLong(getString(R.string.api_tips))
+//            ParticleNetwork.evm.erc1155SafeTransferFrom()
+            lifecycleScope.launch {
+                try {
+                    val contractParams =
+                        ContractParams.customAbiEncodeFunctionCall(
+                            contractAddress, "custom_revealMysteryBox",
+                            listOf(926), ""
+                        )
+                    val iTxData = ParticleNetwork.evm.createTransaction(
+                        from,
+                        to,
+                        amount,
+                        type = "0x0",
+                        contractParams = contractParams
+                    )
+                    LogUtils.d(iTxData, "hexData:${iTxData?.serialize()}")
+                    ToastUtils.showLong("hexData:${iTxData?.serialize()}")
+                } catch (e: Exception) {
+                    ToastUtils.showLong(e.message)
+                }
+
+            }
         }
 
         //Wallet Service
@@ -126,13 +258,13 @@ class APIReferenceActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 binding.signSendTransaction.isClickable = false
                 val req = SerializeSOLTransReq(
-                    ParticleNetwork.getPublicKey(),
+                    ParticleNetwork.getAddress(),
                     "BBBsMq9cEgRf9jeuXqd6QFueyRDhNwykYz63s1vwSCBZ",
                     2 * 10.0.pow(9.0).toLong()
                 )
                 val result =
                     ParticleNetwork.solana.serializeTransaction(req).result
-                val message = result.encodedTransactionSerializeMessage
+                val message = result.transaction.serialized
                 ParticleNetwork.signAndSendTransaction(
                     this@APIReferenceActivity,
                     message,
@@ -173,13 +305,13 @@ class APIReferenceActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 binding.signTransaction.isClickable = false
                 val req = SerializeSOLTransReq(
-                    ParticleNetwork.getPublicKey(),
+                    ParticleNetwork.getAddress(),
                     "BBBsMq9cEgRf9jeuXqd6QFueyRDhNwykYz63s1vwSCBZ",
                     2 * 10.0.pow(9.0).toLong()
                 )
                 val result =
                     ParticleNetwork.solana.serializeTransaction(req).result
-                val message = result.encodedTransactionSerializeMessage
+                val message = result.transaction.serialized
                 //transaction: base58 string
                 ParticleNetwork.signTransaction(
                     this@APIReferenceActivity,

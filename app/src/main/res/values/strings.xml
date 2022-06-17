@@ -36,4 +36,5 @@
     <string name="erc20_transferFrom">erc20TransferFrom</string>
     <string name="erc721_safeTransferFrom">erc721SafeTransferFrom</string>
     <string name="erc1155_safeTransferFrom">erc1155SafeTransferFrom</string>
+    <string name="custom_abi">customAbi</string>
 </resources>

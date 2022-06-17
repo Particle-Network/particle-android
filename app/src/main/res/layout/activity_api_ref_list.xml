@@ -131,6 +131,13 @@
                     android:layout_height="50dp"
                     android:text="@string/erc1155_safeTransferFrom"
                     />
+
+                <Button
+                    android:id="@+id/custom_abi"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@string/custom_abi"
+                    />
             </LinearLayout>
 
 
