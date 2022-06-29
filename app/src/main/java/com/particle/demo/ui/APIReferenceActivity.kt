@@ -17,6 +17,7 @@ import com.particle.base.ParticleNetwork
 import com.particle.gui.router.PNRouter
 import com.particle.gui.router.RouterPath
 import com.particle.network.ParticleNetworkAuth.getAddress
+import com.particle.network.ParticleNetworkAuth.signAllTransactions
 import com.particle.network.ParticleNetworkAuth.signAndSendTransaction
 import com.particle.network.ParticleNetworkAuth.signMessage
 import com.particle.network.ParticleNetworkAuth.signTransaction
@@ -54,6 +55,9 @@ class APIReferenceActivity : AppCompatActivity() {
         }
         binding.signMessage.setOnClickListener {
             testSignMessage()
+        }
+        binding.signAllTransaction.setOnClickListener {
+            testSignAlltransaction()
         }
 
         //Api Service
@@ -216,10 +220,10 @@ class APIReferenceActivity : AppCompatActivity() {
                     // Integer block number, or the string 'latest', 'earliest' or 'pending'
 
                     val quantity = "latest"
-                    val params= listOf(txData,quantity)
+                    val params = listOf(txData, quantity)
                     val result = ParticleNetwork.evm.rpc("eth_call", params)
                     ToastUtils.showLong(result.string())
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                     ToastUtils.showLong(e.message)
                 }
@@ -268,7 +272,7 @@ class APIReferenceActivity : AppCompatActivity() {
 
     private fun testSignSendTransaction() {
         if (ParticleNetwork.isEvmChain()) {
-            lifecycleScope.launch {
+            try {
                 val message =
                     "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
                 ParticleNetwork.signAndSendTransaction(
@@ -276,39 +280,46 @@ class APIReferenceActivity : AppCompatActivity() {
                     message,
                     object : WebServiceCallback<SignOutput> {
                         override fun success(output: SignOutput) {
+                            ToastUtils.showLong(getString(R.string.success))
                         }
 
                         override fun failure(errMsg: WebServiceError) {
+                            ToastUtils.showLong("error code:${errMsg.code} message:${errMsg.message}")
                         }
                     })
+            } catch (e: Exception) {
+                ToastUtils.showLong(e.message)
             }
         } else {
             lifecycleScope.launch {
-                binding.signSendTransaction.isClickable = false
-                val req = SerializeSOLTransReq(
-                    ParticleNetwork.getAddress(),
-                    "BBBsMq9cEgRf9jeuXqd6QFueyRDhNwykYz63s1vwSCBZ",
-                    2 * 10.0.pow(9.0).toLong()
-                )
-                val result =
-                    ParticleNetwork.solana.serializeTransaction(req).result
-                val message = result.transaction.serialized
-                ParticleNetwork.signAndSendTransaction(
-                    this@APIReferenceActivity,
-                    message,
-                    object : WebServiceCallback<SignOutput> {
+                try {
+                    binding.signSendTransaction.isClickable = false
+                    val req = SerializeSOLTransReq(
+                        ParticleNetwork.getAddress(),
+                        "BBBsMq9cEgRf9jeuXqd6QFueyRDhNwykYz63s1vwSCBZ",
+                        2 * 10.0.pow(9.0).toLong()
+                    )
+                    val result =
+                        ParticleNetwork.solana.serializeTransaction(req).result
+                    val message = result.transaction.serialized
+                    ParticleNetwork.signAndSendTransaction(
+                        this@APIReferenceActivity,
+                        message,
+                        object : WebServiceCallback<SignOutput> {
 
-                        override fun success(output: SignOutput) {
-                            showToast(getString(R.string.success))
-                            binding.signSendTransaction.isClickable = true
-                        }
+                            override fun success(output: SignOutput) {
+                                ToastUtils.showLong(output.signature)
+                                binding.signSendTransaction.isClickable = true
+                            }
 
-                        override fun failure(errMsg: WebServiceError) {
-                            showToast(getString(R.string.failed))
-                            binding.signSendTransaction.isClickable = true
-                        }
-                    })
-
+                            override fun failure(errMsg: WebServiceError) {
+                                ToastUtils.showLong("error code:${errMsg.code} message:${errMsg.message}")
+                                binding.signSendTransaction.isClickable = true
+                            }
+                        })
+                } catch (e: Exception) {
+                    ToastUtils.showLong(e.message)
+                }
             }
         }
     }
@@ -316,66 +327,95 @@ class APIReferenceActivity : AppCompatActivity() {
     private fun testSignTransaction() {
         if (ParticleNetwork.isEvmChain()) {
             lifecycleScope.launch {
-                val message =
-                    "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
-                ParticleNetwork.signTransaction(
-                    this@APIReferenceActivity,
-                    message,
-                    object : WebServiceCallback<SignOutput> {
-                        override fun success(output: SignOutput) {
-                        }
+                try {
+                    val message =
+                        "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
+                    ParticleNetwork.signTransaction(
+                        this@APIReferenceActivity,
+                        message,
+                        object : WebServiceCallback<SignOutput> {
+                            override fun success(output: SignOutput) {
+                                ToastUtils.showLong(output.signature)
+                            }
 
-                        override fun failure(errMsg: WebServiceError) {
-                        }
-                    })
+                            override fun failure(errMsg: WebServiceError) {
+                                ToastUtils.showLong("error code:${errMsg.code} message:${errMsg.message}")
+                            }
+                        })
+                } catch (e: Exception) {
+                    ToastUtils.showLong(e.message)
+                }
             }
         } else {
             lifecycleScope.launch {
-                binding.signTransaction.isClickable = false
-                val req = SerializeSOLTransReq(
-                    ParticleNetwork.getAddress(),
-                    "BBBsMq9cEgRf9jeuXqd6QFueyRDhNwykYz63s1vwSCBZ",
-                    2 * 10.0.pow(9.0).toLong()
-                )
-                val result =
-                    ParticleNetwork.solana.serializeTransaction(req).result
-                val message = result.transaction.serialized
-                //transaction: base58 string
-                ParticleNetwork.signTransaction(
-                    this@APIReferenceActivity,
-                    message,
-                    object : WebServiceCallback<SignOutput> {
-                        override fun success(output: SignOutput) {
-                            //sign transaction success
-                            binding.signTransaction.isClickable = true
-                        }
+                try {
+                    binding.signTransaction.isClickable = false
+                    val req = SerializeSOLTransReq(
+                        ParticleNetwork.getAddress(),
+                        "BBBsMq9cEgRf9jeuXqd6QFueyRDhNwykYz63s1vwSCBZ",
+                        2 * 10.0.pow(9.0).toLong()
+                    )
+                    val result =
+                        ParticleNetwork.solana.serializeTransaction(req).result
+                    val message = result.transaction.serialized
+                    //transaction: base58 string
+                    ParticleNetwork.signTransaction(
+                        this@APIReferenceActivity,
+                        message,
+                        object : WebServiceCallback<SignOutput> {
+                            override fun success(output: SignOutput) {
+                                //sign transaction success
+                                binding.signTransaction.isClickable = true
+                            }
 
-                        override fun failure(errMsg: WebServiceError) {
-                            // handle error
-                            binding.signTransaction.isClickable = true
-                        }
-                    })
+                            override fun failure(errMsg: WebServiceError) {
+                                // handle error
+                                binding.signTransaction.isClickable = true
+                            }
+                        })
+                } catch (e: Exception) {
+                    ToastUtils.showLong(e.message)
+                }
             }
         }
 
     }
 
+    private fun testSignAlltransaction() {
+        val trans1 =
+            "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
+        val trans2 =
+            "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
+        val allTrans = listOf(trans1, trans2)
+        ParticleNetwork.signAllTransactions(
+            this@APIReferenceActivity,
+            allTrans,
+            object : WebServiceCallback<SignOutput> {
+                override fun success(output: SignOutput) {
+                    //sign success
+                }
+
+                override fun failure(errMsg: WebServiceError) {
+                    // handle error
+                }
+            })
+    }
+
     private fun testSignMessage() {
         if (ParticleNetwork.isEvmChain()) {
-            lifecycleScope.launch {
-                val message =
-                    "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
-                ParticleNetwork.signMessage(
-                    this@APIReferenceActivity,
-                    message,
-                    object : WebServiceCallback<SignOutput> {
-                        override fun success(output: SignOutput) {
-                        }
+            val message =
+                "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
+            ParticleNetwork.signMessage(
+                this@APIReferenceActivity,
+                message,
+                object : WebServiceCallback<SignOutput> {
+                    override fun success(output: SignOutput) {
+                    }
 
-                        override fun failure(errMsg: WebServiceError) {
-                        }
-                    })
-            }
+                    override fun failure(errMsg: WebServiceError) {
+                    }
+                })
+
         } else {
             //sign any string must be base58 encode
             ParticleNetwork.signMessage(
@@ -391,9 +431,7 @@ class APIReferenceActivity : AppCompatActivity() {
                     }
                 })
         }
+
     }
 
-    private fun showToast(msg: String) {
-        Toast.makeText(this@APIReferenceActivity, msg, Toast.LENGTH_LONG).show()
-    }
 }

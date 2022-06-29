@@ -1,9 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
-def sdkVersion = "0.3.2"
+def sdkVersion = "0.4.0"
 
 Properties localProps = getLocalProperties()
 
@@ -64,6 +66,11 @@ dependencies {
     implementation "network.particle:api-service:$sdkVersion"
     //particle wallet service
     implementation "network.particle:wallet-service:$sdkVersion"
+
+
+    implementation 'com.google.firebase:firebase-bom:30.2.0'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.1.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.0.0'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

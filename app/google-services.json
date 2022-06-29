@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "407535041336",
+    "project_id": "particle-network-8578c",
+    "storage_bucket": "particle-network-8578c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407535041336:android:8ed8c8df4f5aeacf641fcd",
+        "android_client_info": {
+          "package_name": "com.minijoy.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "407535041336-hlabpp79u4ku93opnq19o24frta7rk8n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR4t5TxMaATtApf6cWpdiWdZpF0-XEdFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "407535041336-hlabpp79u4ku93opnq19o24frta7rk8n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407535041336:android:cc6b08addd8ea56e641fcd",
+        "android_client_info": {
+          "package_name": "com.particle.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "407535041336-hlabpp79u4ku93opnq19o24frta7rk8n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR4t5TxMaATtApf6cWpdiWdZpF0-XEdFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "407535041336-hlabpp79u4ku93opnq19o24frta7rk8n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

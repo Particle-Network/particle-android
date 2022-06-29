@@ -30,24 +30,57 @@
             android:src="@drawable/logo"
             />
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/icon"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="240dp"
-            android:src="@drawable/icon"
-            />
+            android:layout_marginTop="220dp"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:text="Sign in to "
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:text="Particle Wallet"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="240dp"
+            android:layout_marginTop="220dp"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone"
+            tools:visibility="visible"
             >
 
             <ImageView
@@ -66,51 +99,90 @@
                 />
         </LinearLayout>
 
-
+        <!--Login -->
         <LinearLayout
             android:id="@+id/login_layout"
-            android:layout_width="wrap_content"
-
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="120dp"
+            android:layout_marginBottom="180dp"
             android:orientation="vertical"
-            tools:visibility="invisible"
+            tools:visibility="visible"
             >
 
-            <Button
-                android:id="@+id/email_login"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="@string/email_login"
-                />
 
-            <Button
-                android:id="@+id/phone_login"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_margin="16dp"
-                android:text="@string/phone_login"
-                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:id="@+id/email_login"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@mipmap/ic_email"
+                    />
+
+                <ImageView
+                    android:id="@+id/phone_login"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@mipmap/ic_phone"
+                    />
+
+                <ImageView
+                    android:id="@+id/google_login"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@mipmap/ic_google"
+                    />
+
+                <ImageView
+                    android:id="@+id/facebook_login"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@mipmap/ic_facebook"
+                    />
+
+                <ImageView
+                    android:id="@+id/apple_login"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@mipmap/ic_apple"
+                    />
+
+                <ImageView
+                    android:id="@+id/twitter_login"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@mipmap/ic_twitter"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
 
         </LinearLayout>
 
-
+        <!--        Login Success-->
         <LinearLayout
-            tools:visibility="visible"
             android:id="@+id/login_success"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="120dp"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical"
             android:padding="16dp"
             android:visibility="gone"
+            tools:visibility="gone"
             >
 
             <Button
@@ -118,7 +190,7 @@
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/open_wallet"
                 />
@@ -127,18 +199,29 @@
                 android:id="@+id/logout"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/logout"
                 />
 
-            <Button
-                android:id="@+id/api_reference"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_margin="16dp"
-                android:text="@string/api_reference"
-                />
+            <LinearLayout
+                android:id="@+id/llSolana"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <Button
+                    android:id="@+id/api_reference"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/api_reference"
+                    />
+
+
+            </LinearLayout>
 
         </LinearLayout>
 

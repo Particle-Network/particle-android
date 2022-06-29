@@ -24,7 +24,7 @@
     <string name="success">Success</string>
     <string name="failed">Failed</string>
     <string name="auth_tips">Just to demonstrate the functionality, you need to fill in the correct parameters in the source code to display the correct data</string>
-
+    <string name="sign_all_transaction">Sign All Transaction</string>
     <string name="solana">Solana</string>
     <string name="ethereum">Ethereum</string>
     <string name="ethereum_chains">EVM-Chains</string>
