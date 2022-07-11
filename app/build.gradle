@@ -5,7 +5,7 @@ plugins {
     id("com.google.firebase.crashlytics")
 }
 
-def sdkVersion = "0.4.1"
+def sdkVersion = "0.5.1"
 
 Properties localProps = getLocalProperties()
 

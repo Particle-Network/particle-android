@@ -52,11 +52,11 @@ class MainActivity : AppCompatActivity() {
         chainInfos.add(SolanaChain(SolanaChainId.Devnet))
 
         chainInfos.add(EthereumChain(EthereumChainId.Mainnet))
-        chainInfos.add(EthereumChain(EthereumChainId.TestnetKovan))
+        chainInfos.add(EthereumChain(EthereumChainId.Kovan))
         chainInfos.add(BscChain(BscChainId.Mainnet))
         chainInfos.add(BscChain(BscChainId.Testnet))
         chainInfos.add(PolygonChain(PolygonChainId.Mainnet))
-        chainInfos.add(PolygonChain(PolygonChainId.TestnetMumbai))
+        chainInfos.add(PolygonChain(PolygonChainId.Mumbai))
         chainInfos.add(AvalancheChain(AvalancheChainId.Mainnet))
         chainInfos.add(AvalancheChain(AvalancheChainId.Testnet))
 

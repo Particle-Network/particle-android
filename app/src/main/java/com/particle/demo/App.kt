@@ -8,7 +8,7 @@ import com.particle.gui.ParticleWallet.enablePay
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        ParticleNetwork.init(this, Env.DEV, EthereumChain(EthereumChainId.TestnetKovan))
+        ParticleNetwork.init(this, Env.DEV, EthereumChain(EthereumChainId.Kovan))
         ParticleWallet.init(this)
         ParticleNetwork.enablePay(false) //control whether to enable pay feature
     }
