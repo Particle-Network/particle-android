@@ -10,6 +10,6 @@ class App : Application() {
         super.onCreate()
         ParticleNetwork.init(this, Env.DEV, EthereumChain(EthereumChainId.Kovan))
         ParticleWallet.init(this)
-        ParticleNetwork.enablePay(false) //control whether to enable pay feature
+        ParticleNetwork.enablePay(true) //control whether to enable pay feature, default is true
     }
 }
