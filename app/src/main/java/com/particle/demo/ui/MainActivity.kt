@@ -85,7 +85,6 @@ class MainActivity : AppCompatActivity() {
             chainInfos[selectChain].chainName.toString() + "\n" + chainInfos[selectChain].chainId.toString()
         if (ParticleNetwork.isLogin()) {
             ParticleNetwork.setChainInfo(
-                this@MainActivity,
                 chainInfos[selectChain],
                 object : ChainChangeCallBack {
                     override fun success() {
@@ -160,7 +159,6 @@ class MainActivity : AppCompatActivity() {
         supportAuthTypeValue: Int = SupportAuthType.NONE.value,
     ) {
         ParticleNetwork.login(
-            this,
             loginType,
             "",
             supportAuthTypeValue,
@@ -177,7 +175,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        ParticleNetwork.logout(this, object : WebServiceCallback<WebOutput> {
+        ParticleNetwork.logout(object : WebServiceCallback<WebOutput> {
             override fun success(output: WebOutput) {
                 refreshUIState()
             }
@@ -218,7 +216,6 @@ class MainActivity : AppCompatActivity() {
         binding.chain.text = chain.chainName.toString() + "\n" + chain.chainId.toString()
         if (ParticleNetwork.isLogin()) {
             ParticleNetwork.setChainInfo(
-                this@MainActivity,
                 chainInfos[selectChain],
                 object : ChainChangeCallBack {
                     override fun success() {
