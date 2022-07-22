@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-def sdkVersion = "0.5.6"
+def sdkVersion = "0.5.7"
 
 Properties localProps = getLocalProperties()
 
