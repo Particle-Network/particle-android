@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-def sdkVersion = "0.5.5"
+def sdkVersion = "0.6.1"
 
 Properties localProps = getLocalProperties()
 
@@ -11,7 +11,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.particle.demo"
+        applicationId "network.particle.wallet"
         minSdk 23
         targetSdk 31
         versionCode 2

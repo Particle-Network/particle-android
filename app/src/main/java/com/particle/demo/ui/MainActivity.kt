@@ -1,31 +1,43 @@
 package com.particle.demo.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ToastUtils
+import com.connect.common.ConnectCallback
+import com.connect.common.model.Account
+import com.connect.common.model.ConnectError
 import com.minijoy.demo.R
 import com.minijoy.demo.databinding.ActivityMainBinding
+import com.particle.api.infrastructure.db.table.WalletType
+import com.particle.api.service.DBService
 import com.particle.base.*
+import com.particle.connect.ParticleConnect
+import com.particle.connect.ParticleConnectAdapter
+import com.particle.gui.isWalletLogin
 import com.particle.gui.router.PNRouter
 import com.particle.gui.router.RouterPath
+import com.particle.gui.utils.WalletUtils
 import com.particle.network.ParticleNetworkAuth.isLogin
-import com.particle.network.ParticleNetworkAuth.login
 import com.particle.network.ParticleNetworkAuth.logout
 import com.particle.network.ParticleNetworkAuth.setChainInfo
 import com.particle.network.service.ChainChangeCallBack
 import com.particle.network.service.LoginType
 import com.particle.network.service.SupportAuthType
 import com.particle.network.service.WebServiceCallback
-import com.particle.network.service.model.LoginOutput
 import com.particle.network.service.model.WebOutput
 import com.particle.network.service.model.WebServiceError
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,10 +50,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sp: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initState()
         sp = getSharedPreferences("main", Context.MODE_PRIVATE)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setData()
-        refreshUIState()
         setListeners()
     }
 
@@ -101,7 +113,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshUIState() {
-        if (ParticleNetwork.isLogin()) {
+        if (ParticleNetwork.isWalletLogin()) {
             binding.loginSuccess.visibility = View.VISIBLE
             binding.loginLayout.visibility = View.GONE
             binding.welcome.visibility = View.VISIBLE
@@ -121,8 +133,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.phoneLogin.setOnClickListener {
             login(
-                LoginType.PHONE,
-                SupportAuthType.GOOGLE.value or SupportAuthType.FACEBOOK.value or SupportAuthType.APPLE.value
+                LoginType.PHONE, SupportAuthType.ALL.value
             )
         }
         binding.googleLogin.setOnClickListener {
@@ -158,25 +169,30 @@ class MainActivity : AppCompatActivity() {
         loginType: LoginType,
         supportAuthTypeValue: Int = SupportAuthType.NONE.value,
     ) {
-        ParticleNetwork.login(
-            loginType,
-            "",
-            supportAuthTypeValue,
-            object : WebServiceCallback<LoginOutput> {
-                override fun success(output: LoginOutput) {
+        val adapter = ParticleConnect.getAdapters().first { it is ParticleConnectAdapter }
+        adapter.connect(object : ConnectCallback {
+            override fun onConnected(account: Account) {
+
+                lifecycleScope.launch {
+                    val wallet = WalletUtils.createSelectedWallet(account.publicAddress, adapter)
+                    WalletUtils.setWalletChain(wallet)
                     refreshUIState()
                 }
+            }
 
-                override fun failure(errMsg: WebServiceError) {
-                    Toast.makeText(this@MainActivity, errMsg.message, Toast.LENGTH_SHORT).show()
-                }
+            override fun onError(error: ConnectError) {
+            }
 
-            })
+        })
     }
 
     private fun logout() {
+        if (!ParticleNetwork.isLogin()) return
         ParticleNetwork.logout(object : WebServiceCallback<WebOutput> {
             override fun success(output: WebOutput) {
+                lifecycleScope.launch {
+                    DBService.walletDao.deleteWalletByType(WalletType.PN_WALLET.toString())
+                }
                 refreshUIState()
             }
 
@@ -235,5 +251,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        refreshUIState()
+    }
+
+    @SuppressLint("ObsoleteSdkInt")
+    fun initState() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.getDecorView()
+            .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.setStatusBarColor(Color.TRANSPARENT)
     }
 }
