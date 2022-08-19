@@ -215,6 +215,22 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/open_nft_send"
                 />
+
+            <Button
+                android:id="@+id/read_contract"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/read_contract"
+                />
+
+            <Button
+                android:id="@+id/write_contract"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/write_contract"
+                />
         </LinearLayout>
 
     </ScrollView>

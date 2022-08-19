@@ -38,4 +38,6 @@
     <string name="erc1155_safeTransferFrom">erc1155SafeTransferFrom</string>
     <string name="custom_abi">customAbi</string>
     <string name="rpc">RPC Demo</string>
+    <string name="read_contract">Read Contract</string>
+    <string name="write_contract">Write Contract</string>
 </resources>

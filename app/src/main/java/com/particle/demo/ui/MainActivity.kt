@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         supportAuthTypeValue: Int = SupportAuthType.NONE.value,
     ) {
         val adapter = ParticleConnect.getAdapters().first { it is ParticleConnectAdapter }
-        adapter.connect(object : ConnectCallback {
+        adapter.connect(null,object : ConnectCallback {
             override fun onConnected(account: Account) {
 
                 lifecycleScope.launch {

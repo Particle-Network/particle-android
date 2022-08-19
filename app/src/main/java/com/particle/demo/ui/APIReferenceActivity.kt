@@ -69,7 +69,7 @@ class APIReferenceActivity : AppCompatActivity() {
 //            ParticleNetwork.evm.erc20Transfer(contractAddress = "",to="", amount = )
             lifecycleScope.launch {
                 try {
-                    val contractParams = ContractParams.erc20Transform(contractAddress, to, amount)
+                    val contractParams = ContractParams.erc20Transfer(contractAddress, to, amount)
                     val iTxData = ParticleNetwork.evm.createTransaction(
                         from,
                         to,
@@ -267,6 +267,16 @@ class APIReferenceActivity : AppCompatActivity() {
 //            PNRouter.build(RouterPath.NftDetails,params).navigation()
             ToastUtils.showLong(getString(R.string.api_tips))
         }
+        binding.readContract.setOnClickListener {
+            lifecycleScope.launch {
+                readContract()
+            }
+        }
+        binding.writeContract.setOnClickListener {
+            lifecycleScope.launch {
+                writeContract()
+            }
+        }
     }
 
 
@@ -425,6 +435,35 @@ class APIReferenceActivity : AppCompatActivity() {
                 })
         }
 
+    }
+
+    private suspend fun readContract() {
+        if (ParticleNetwork.isEvmChain()) {
+            ParticleNetwork.evm.readContract(
+                "0xd000f000aa1f8accbd5815056ea32a54777b2fc4",
+                "balanceOf",
+                listOf("0xBbc1CA8776EfDeC12C75e218C64e96ce52aC6671")
+            )
+        } else {
+            ToastUtils.showLong("current chain not support")
+        }
+
+    }
+
+    private suspend fun writeContract() {
+        if (ParticleNetwork.isEvmChain()) {
+            val params = ContractParams.customAbiEncodeFunctionCall(
+                contractAddress = "0xd000f000aa1f8accbd5815056ea32a54777b2fc4",
+                methodName = "mint",
+                params = listOf("1")
+            )
+            ParticleNetwork.evm.writeContract(
+                "0xd000f000aa1f8accbd5815056ea32a54777b2fc4",
+                params
+            )
+        } else {
+            ToastUtils.showLong("current chain not support")
+        }
     }
 
 }
