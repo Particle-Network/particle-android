@@ -53,6 +53,7 @@ class App : Application() {
         if (BuildConfig.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true)
         }
+        ParticleWallet.showTestNetworks(true)
     }
 
 }

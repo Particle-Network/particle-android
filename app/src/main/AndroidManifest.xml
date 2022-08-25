@@ -63,7 +63,21 @@
             android:value="${PN_APP_ID}"
             />
         <!--   Particle Network config end     -->
+        <!-- Particle Connect Redirect Callback -->
+        <activity
+            android:name="com.connect.common.controller.RedirectActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="connect${PN_APP_ID}" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
