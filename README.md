@@ -2,7 +2,7 @@
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/network.particle/auth-service/badge.svg?style=flat)](https://search.maven.org/search?q=g:network.particle)
 
-[View in Google Market](https://play.google.com/store/apps/details?id=network.particle.auth)
+👉 [View in Google Market](https://play.google.com/store/apps/details?id=network.particle.auth)
 
 This repository contains [Auth Service](https://docs.particle.network/auth-service/introduction) and [Wallet Service](https://docs.particle.network/wallet-service/introduction) sample source. It supports Solana and all EVM-compatiable chains now, more chains and more features coming soon! Learn more visit [Particle Network](https://docs.particle.network/).
 
