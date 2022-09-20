@@ -14,6 +14,7 @@ import com.particle.api.infrastructure.net.data.SerializeSOLTransReq
 import com.particle.api.service.data.ContractParams
 import com.particle.api.solana
 import com.particle.base.ParticleNetwork
+import com.particle.base.model.ITxData
 import com.particle.gui.router.PNRouter
 import com.particle.gui.router.RouterPath
 import com.particle.network.ParticleNetworkAuth.getAddress
@@ -71,11 +72,7 @@ class APIReferenceActivity : AppCompatActivity() {
                 try {
                     val contractParams = ContractParams.erc20Transfer(contractAddress, to, amount)
                     val iTxData = ParticleNetwork.evm.createTransaction(
-                        from,
-                        to,
-                        amount,
-                        type = "0x0",
-                        contractParams = contractParams
+                        from, to, amount, type = "0x0", contractParams = contractParams
                     )
                     LogUtils.d(iTxData, "hexData:${iTxData?.serialize()}")
                     ToastUtils.showLong("hexData:${iTxData?.serialize()}")
@@ -115,11 +112,7 @@ class APIReferenceActivity : AppCompatActivity() {
                     val contractParams =
                         ContractParams.erc20TransferFrom(contractAddress, from, to, amount)
                     val iTxData = ParticleNetwork.evm.createTransaction(
-                        from,
-                        to,
-                        amount,
-                        type = "0x0",
-                        contractParams = contractParams
+                        from, to, amount, type = "0x0", contractParams = contractParams
                     )
                     LogUtils.d(iTxData, "hexData:${iTxData?.serialize()}")
                     ToastUtils.showLong("hexData:${iTxData?.serialize()}")
@@ -138,11 +131,7 @@ class APIReferenceActivity : AppCompatActivity() {
                     val contractParams =
                         ContractParams.erc721SafeTransferFrom(contractAddress, from, to, amount)
                     val iTxData = ParticleNetwork.evm.createTransaction(
-                        from,
-                        to,
-                        amount,
-                        type = "0x0",
-                        contractParams = contractParams
+                        from, to, amount, type = "0x0", contractParams = contractParams
                     )
                     LogUtils.d(iTxData, "hexData:${iTxData?.serialize()}")
                     ToastUtils.showLong("hexData:${iTxData?.serialize()}")
@@ -159,15 +148,9 @@ class APIReferenceActivity : AppCompatActivity() {
                 try {
                     val id = ""
                     val data = "0x0"
-                    val contractParams =
-                        ContractParams.erc1155SafeTransferFrom(
-                            contractAddress,
-                            from,
-                            to,
-                            id,
-                            amount,
-                            data
-                        )
+                    val contractParams = ContractParams.erc1155SafeTransferFrom(
+                        contractAddress, from, to, id, amount, data
+                    )
                     val iTxData = ParticleNetwork.evm.createTransaction(
                         ParticleNetwork.getAddress(),
                         to,
@@ -189,17 +172,11 @@ class APIReferenceActivity : AppCompatActivity() {
 //            ParticleNetwork.evm.erc1155SafeTransferFrom()
             lifecycleScope.launch {
                 try {
-                    val contractParams =
-                        ContractParams.customAbiEncodeFunctionCall(
-                            contractAddress, "custom_revealMysteryBox",
-                            listOf(926), ""
-                        )
+                    val contractParams = ContractParams.customAbiEncodeFunctionCall(
+                        contractAddress, "custom_revealMysteryBox", listOf(926), ""
+                    )
                     val iTxData = ParticleNetwork.evm.createTransaction(
-                        from,
-                        to,
-                        amount,
-                        type = "0x0",
-                        contractParams = contractParams
+                        from, to, amount, type = "0x0", contractParams = contractParams
                     )
                     LogUtils.d(iTxData, "hexData:${iTxData?.serialize()}")
                     ToastUtils.showLong("hexData:${iTxData?.serialize()}")
@@ -285,8 +262,7 @@ class APIReferenceActivity : AppCompatActivity() {
             try {
                 val message =
                     "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
-                ParticleNetwork.signAndSendTransaction(
-                    message,
+                ParticleNetwork.signAndSendTransaction(message,
                     object : WebServiceCallback<SignOutput> {
                         override fun success(output: SignOutput) {
                             ToastUtils.showLong(getString(R.string.success))
@@ -308,11 +284,9 @@ class APIReferenceActivity : AppCompatActivity() {
                         "BBBsMq9cEgRf9jeuXqd6QFueyRDhNwykYz63s1vwSCBZ",
                         2 * 10.0.pow(9.0).toLong()
                     )
-                    val result =
-                        ParticleNetwork.solana.serializeTransaction(req).result
+                    val result = ParticleNetwork.solana.serializeTransaction(req).result
                     val message = result.transaction.serialized
-                    ParticleNetwork.signAndSendTransaction(
-                        message,
+                    ParticleNetwork.signAndSendTransaction(message,
                         object : WebServiceCallback<SignOutput> {
 
                             override fun success(output: SignOutput) {
@@ -338,8 +312,7 @@ class APIReferenceActivity : AppCompatActivity() {
                 try {
                     val message =
                         "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
-                    ParticleNetwork.signTransaction(
-                        message,
+                    ParticleNetwork.signTransaction(message,
                         object : WebServiceCallback<SignOutput> {
                             override fun success(output: SignOutput) {
                                 ToastUtils.showLong(output.signature)
@@ -362,12 +335,10 @@ class APIReferenceActivity : AppCompatActivity() {
                         "BBBsMq9cEgRf9jeuXqd6QFueyRDhNwykYz63s1vwSCBZ",
                         2 * 10.0.pow(9.0).toLong()
                     )
-                    val result =
-                        ParticleNetwork.solana.serializeTransaction(req).result
+                    val result = ParticleNetwork.solana.serializeTransaction(req).result
                     val message = result.transaction.serialized
                     //transaction: base58 string
-                    ParticleNetwork.signTransaction(
-                        message,
+                    ParticleNetwork.signTransaction(message,
                         object : WebServiceCallback<SignOutput> {
                             override fun success(output: SignOutput) {
                                 //sign transaction success
@@ -393,9 +364,32 @@ class APIReferenceActivity : AppCompatActivity() {
         val trans2 =
             "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
         val allTrans = listOf(trans1, trans2)
-        ParticleNetwork.signAllTransactions(
-            allTrans,
-            object : WebServiceCallback<SignOutput> {
+        ParticleNetwork.signAllTransactions(allTrans, object : WebServiceCallback<SignOutput> {
+            override fun success(output: SignOutput) {
+                //sign success
+            }
+
+            override fun failure(errMsg: WebServiceError) {
+                // handle error
+            }
+        })
+    }
+
+    private fun testSignMessage() {
+        if (ParticleNetwork.isEvmChain()) {
+            val message =
+                "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
+            ParticleNetwork.signMessage(message, object : WebServiceCallback<SignOutput> {
+                override fun success(output: SignOutput) {
+                }
+
+                override fun failure(errMsg: WebServiceError) {
+                }
+            })
+
+        } else {
+            //sign any string must be base58 encode
+            ParticleNetwork.signMessage("MK5NWRBTfRn", object : WebServiceCallback<SignOutput> {
                 override fun success(output: SignOutput) {
                     //sign success
                 }
@@ -404,35 +398,6 @@ class APIReferenceActivity : AppCompatActivity() {
                     // handle error
                 }
             })
-    }
-
-    private fun testSignMessage() {
-        if (ParticleNetwork.isEvmChain()) {
-            val message =
-                "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
-            ParticleNetwork.signMessage(
-                message,
-                object : WebServiceCallback<SignOutput> {
-                    override fun success(output: SignOutput) {
-                    }
-
-                    override fun failure(errMsg: WebServiceError) {
-                    }
-                })
-
-        } else {
-            //sign any string must be base58 encode
-            ParticleNetwork.signMessage(
-                "MK5NWRBTfRn",
-                object : WebServiceCallback<SignOutput> {
-                    override fun success(output: SignOutput) {
-                        //sign success
-                    }
-
-                    override fun failure(errMsg: WebServiceError) {
-                        // handle error
-                    }
-                })
         }
 
     }
@@ -450,6 +415,10 @@ class APIReferenceActivity : AppCompatActivity() {
 
     }
 
+    /**
+     *  https://goerli.etherscan.io/address/0xd000f000aa1f8accbd5815056ea32a54777b2fc4#writeContract
+     *  https://faucets.chain.link/goerli
+     */
     private suspend fun writeContract() {
         if (ParticleNetwork.isEvmChain()) {
             val params = ContractParams.customAbiEncodeFunctionCall(
@@ -457,10 +426,19 @@ class APIReferenceActivity : AppCompatActivity() {
                 methodName = "mint",
                 params = listOf("1")
             )
-            ParticleNetwork.evm.writeContract(
-                "0xd000f000aa1f8accbd5815056ea32a54777b2fc4",
-                params
+            val txData: ITxData? = ParticleNetwork.evm.writeContract(
+                ParticleNetwork.getAddress(), params
             )
+            ParticleNetwork.signAndSendTransaction(txData!!.serialize(),
+                object : WebServiceCallback<SignOutput> {
+                    override fun success(output: SignOutput) {
+                        ToastUtils.showLong(output.signature)
+                    }
+
+                    override fun failure(errMsg: WebServiceError) {
+                        ToastUtils.showLong("failure:" + errMsg.message)
+                    }
+                })
         } else {
             ToastUtils.showLong("current chain not support")
         }
