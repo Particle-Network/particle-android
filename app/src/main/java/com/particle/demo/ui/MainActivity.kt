@@ -24,6 +24,7 @@ import com.particle.api.service.DBService
 import com.particle.base.*
 import com.particle.connect.ParticleConnect
 import com.particle.connect.ParticleConnectAdapter
+import com.particle.connect.ParticleConnectConfig
 import com.particle.gui.isWalletLogin
 import com.particle.gui.router.PNRouter
 import com.particle.gui.router.RouterPath
@@ -64,7 +65,9 @@ class MainActivity : AppCompatActivity() {
         chainInfos.add(SolanaChain(SolanaChainId.Devnet))
 
         chainInfos.add(EthereumChain(EthereumChainId.Mainnet))
-        chainInfos.add(EthereumChain(EthereumChainId.Kovan))
+        chainInfos.add(EthereumChain(EthereumChainId.Goerli))
+        chainInfos.add(EthereumChain(EthereumChainId.Rinkeby))
+        chainInfos.add(EthereumChain(EthereumChainId.Ropsten))
         chainInfos.add(BscChain(BscChainId.Mainnet))
         chainInfos.add(BscChain(BscChainId.Testnet))
         chainInfos.add(PolygonChain(PolygonChainId.Mainnet))
@@ -170,7 +173,8 @@ class MainActivity : AppCompatActivity() {
         supportAuthTypeValue: Int = SupportAuthType.NONE.value,
     ) {
         val adapter = ParticleConnect.getAdapters().first { it is ParticleConnectAdapter }
-        adapter.connect(null,object : ConnectCallback {
+        val config = ParticleConnectConfig(loginType, supportAuthTypeValue)
+        adapter.connect(config, object : ConnectCallback {
             override fun onConnected(account: Account) {
 
                 lifecycleScope.launch {
