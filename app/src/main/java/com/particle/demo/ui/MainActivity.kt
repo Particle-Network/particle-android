@@ -25,10 +25,10 @@ import com.particle.base.*
 import com.particle.connect.ParticleConnect
 import com.particle.connect.ParticleConnectAdapter
 import com.particle.connect.ParticleConnectConfig
+import com.particle.gui.ParticleWallet
 import com.particle.gui.isWalletLogin
 import com.particle.gui.router.PNRouter
 import com.particle.gui.router.RouterPath
-import com.particle.gui.utils.WalletUtils
 import com.particle.network.ParticleNetworkAuth.isLogin
 import com.particle.network.ParticleNetworkAuth.logout
 import com.particle.network.ParticleNetworkAuth.setChainInfo
@@ -66,8 +66,6 @@ class MainActivity : AppCompatActivity() {
 
         chainInfos.add(EthereumChain(EthereumChainId.Mainnet))
         chainInfos.add(EthereumChain(EthereumChainId.Goerli))
-        chainInfos.add(EthereumChain(EthereumChainId.Rinkeby))
-        chainInfos.add(EthereumChain(EthereumChainId.Ropsten))
         chainInfos.add(BscChain(BscChainId.Mainnet))
         chainInfos.add(BscChain(BscChainId.Testnet))
         chainInfos.add(PolygonChain(PolygonChainId.Mainnet))
@@ -176,10 +174,8 @@ class MainActivity : AppCompatActivity() {
         val config = ParticleConnectConfig(loginType, supportAuthTypeValue)
         adapter.connect(config, object : ConnectCallback {
             override fun onConnected(account: Account) {
-
                 lifecycleScope.launch {
-                    val wallet = WalletUtils.createSelectedWallet(account.publicAddress, adapter)
-                    WalletUtils.setWalletChain(wallet)
+                    ParticleWallet.setWallet(account.publicAddress, adapter)
                     refreshUIState()
                 }
             }
