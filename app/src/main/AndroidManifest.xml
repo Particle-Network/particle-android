@@ -38,7 +38,7 @@
             android:name="com.particle.network.controller.WebActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:theme="@style/ThemeAuthWeb"
             >
             <intent-filter>
                 <data android:scheme="pn${PN_APP_ID}" />

@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         chainInfos.add(FantomChain(FantomChainId.Testnet))
 
         chainInfos.add(ArbitrumChain(ArbitrumChainId.Mainnet))
-        chainInfos.add(ArbitrumChain(ArbitrumChainId.Testnet))
+        chainInfos.add(ArbitrumChain(ArbitrumChainId.Goerli))
 
         chainInfos.add(HarmonyChain(HarmonyChainId.Mainnet))
         chainInfos.add(HarmonyChain(HarmonyChainId.Testnet))
