@@ -4,7 +4,7 @@ plugins {
 }
 
 def sdkVersion = "0.9.1"
-def sdkAuthTiramisuVersion = "0.9.2"
+def sdkAuthTiramisuVersion = "0.9.3"
 Properties localProps = getLocalProperties()
 
 android {

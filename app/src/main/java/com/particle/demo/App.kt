@@ -9,6 +9,7 @@ import com.particle.base.*
 import com.particle.connect.ParticleConnect
 import com.particle.connect.ParticleConnectAdapter
 import com.particle.gui.ParticleWallet
+import com.particle.network.ParticleNetworkAuth
 import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
 import com.wallet.connect.adapter.MetaMaskConnectAdapter
@@ -46,8 +47,7 @@ class App : Application() {
                 SolanaConnectAdapter(),
             )
         }
-
-
+        ParticleNetworkAuth.setBrowserHeightPercent(0.6f)
 //        ParticleNetwork.init(this, Env.DEV, EthereumChain(EthereumChainId.Kovan))
         ParticleWallet.init(this)
         if (BuildConfig.DEBUG) {
