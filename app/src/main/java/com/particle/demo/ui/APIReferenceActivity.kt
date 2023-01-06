@@ -1,7 +1,6 @@
 package com.particle.demo.ui
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +14,7 @@ import com.particle.api.service.data.ContractParams
 import com.particle.api.solana
 import com.particle.base.ParticleNetwork
 import com.particle.base.model.ITxData
+import com.particle.demo.utils.MockManger
 import com.particle.gui.router.PNRouter
 import com.particle.gui.router.RouterPath
 import com.particle.network.ParticleNetworkAuth.getAddress
@@ -376,10 +376,10 @@ class APIReferenceActivity : AppCompatActivity() {
     }
 
     private fun testSignMessage() {
+        val testMessage= MockManger.encode("Hello Particle")
+
         if (ParticleNetwork.isEvmChain()) {
-            val message =
-                "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
-            ParticleNetwork.signMessage(message, object : WebServiceCallback<SignOutput> {
+            ParticleNetwork.signMessage(testMessage, object : WebServiceCallback<SignOutput> {
                 override fun success(output: SignOutput) {
                 }
 
@@ -389,7 +389,7 @@ class APIReferenceActivity : AppCompatActivity() {
 
         } else {
             //sign any string must be base58 encode
-            ParticleNetwork.signMessage("MK5NWRBTfRn", object : WebServiceCallback<SignOutput> {
+            ParticleNetwork.signMessage(testMessage, object : WebServiceCallback<SignOutput> {
                 override fun success(output: SignOutput) {
                     //sign success
                 }
