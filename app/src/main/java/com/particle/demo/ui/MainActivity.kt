@@ -153,7 +153,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.logout.setOnClickListener {
             logout()
-
         }
 
         binding.chain.setOnClickListener {
@@ -187,7 +186,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        if (!ParticleNetwork.isLogin()) return
+
         ParticleNetwork.logout(object : WebServiceCallback<WebOutput> {
             override fun success(output: WebOutput) {
                 lifecycleScope.launch {
@@ -199,7 +198,6 @@ class MainActivity : AppCompatActivity() {
             override fun failure(errMsg: WebServiceError) {
                 Toast.makeText(this@MainActivity, errMsg.message, Toast.LENGTH_SHORT).show()
             }
-
         })
     }
 

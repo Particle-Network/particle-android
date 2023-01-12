@@ -3,8 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-def sdkVersion = "0.9.12"
-def sdkAuthTiramisuVersion = "0.9.12"
+def sdkVersion = "0.9.15"
+def sdkAuthTiramisuVersion = "0.9.15"
 Properties localProps = getLocalProperties()
 
 android {

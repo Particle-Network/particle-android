@@ -197,6 +197,7 @@
 
             <Button
                 android:id="@+id/logout"
+                android:visibility="gone"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="16dp"

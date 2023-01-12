@@ -202,7 +202,12 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/open_nft_send" />
-
+            <Button
+                android:id="@+id/open_swap"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/open_swap" />
 
         </LinearLayout>
 

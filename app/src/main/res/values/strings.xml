@@ -21,6 +21,7 @@
     <string name="open_transaction_records">Open Transaction Records</string>
     <string name="open_nft_details">Open NFT Details</string>
     <string name="open_nft_send">Open NFT Send</string>
+    <string name="open_swap">Open Swap</string>
     <string name="success">Success</string>
     <string name="failed">Failed</string>
     <string name="auth_tips">Just to demonstrate the functionality, you need to fill in the correct parameters in the source code to display the correct data</string>

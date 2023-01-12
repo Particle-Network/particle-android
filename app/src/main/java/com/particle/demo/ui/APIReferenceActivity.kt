@@ -17,6 +17,7 @@ import com.particle.base.model.ITxData
 import com.particle.demo.utils.MockManger
 import com.particle.gui.router.PNRouter
 import com.particle.gui.router.RouterPath
+import com.particle.gui.ui.swap.SwapConfig
 import com.particle.network.ParticleNetworkAuth.getAddress
 import com.particle.network.ParticleNetworkAuth.signAllTransactions
 import com.particle.network.ParticleNetworkAuth.signAndSendTransaction
@@ -244,6 +245,11 @@ class APIReferenceActivity : AppCompatActivity() {
 //            PNRouter.build(RouterPath.NftDetails,params).navigation()
             ToastUtils.showLong(getString(R.string.api_tips))
         }
+
+        binding.openSwap.setOnClickListener {
+            PNRouter.navigatorSwap(SwapConfig(toTokenAddress = "0x66c3E9e7ecBCFaeB4A132cFCAdF23821a00b34e7"))
+        }
+
         binding.readContract.setOnClickListener {
             lifecycleScope.launch {
                 readContract()
@@ -254,6 +260,7 @@ class APIReferenceActivity : AppCompatActivity() {
                 writeContract()
             }
         }
+
     }
 
 
