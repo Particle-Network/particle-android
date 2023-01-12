@@ -3,8 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-def sdkVersion = "0.9.15"
-def sdkAuthTiramisuVersion = "0.9.15"
+def sdkVersion = "0.9.16"
 Properties localProps = getLocalProperties()
 
 android {
@@ -63,8 +62,8 @@ dependencies {
 
     //particle auth service
 //    implementation "network.particle:auth-service:$sdkVersion"
-    //particle auth service tiramisu, it supports auth web half screen
-    implementation "network.particle:auth-service-tiramisu:$sdkAuthTiramisuVersion"
+    //particle auth service tiramisu, it supports auth web half screen,require targetSdkVersion 33
+    implementation "network.particle:auth-service-tiramisu:$sdkVersion"
 
 
     //particle api service

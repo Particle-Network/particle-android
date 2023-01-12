@@ -6,10 +6,12 @@ import com.connect.common.model.DAppMetadata
 import com.evm.adapter.EVMConnectAdapter
 import com.minijoy.demo.BuildConfig
 import com.particle.base.*
+import com.particle.browser.ParticleNetworkAuthTiramisu.setBrowserHeightPercent
 import com.particle.connect.ParticleConnect
 import com.particle.connect.ParticleConnectAdapter
 import com.particle.gui.ParticleWallet
-import com.particle.network.ParticleNetworkAuth
+import com.particle.network.ParticleNetworkAuth.setSecurityAccountConfig
+import com.particle.network.service.model.SecurityAccountConfig
 import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
 import com.wallet.connect.adapter.MetaMaskConnectAdapter
@@ -47,8 +49,12 @@ class App : Application() {
                 SolanaConnectAdapter(),
             )
         }
-        ParticleNetworkAuth.setBrowserHeightPercent(0.6f)
-//        ParticleNetwork.init(this, Env.DEV, EthereumChain(EthereumChainId.Kovan))
+        //if you use auth-service-tiramisu, you can set the height of the browser
+        ParticleNetwork.setBrowserHeightPercent(0.6f)
+
+        //Controls whether the set password dialog appears in auth service, default is true
+        ParticleNetwork.setSecurityAccountConfig(SecurityAccountConfig(false))
+
         ParticleWallet.init(this)
         if (BuildConfig.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true)
