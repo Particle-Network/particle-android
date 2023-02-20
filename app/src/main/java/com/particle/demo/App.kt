@@ -53,7 +53,7 @@ class App : Application() {
         ParticleNetwork.setBrowserHeightPercent(0.6f)
 
         //Controls whether the set password dialog appears in auth service, default is true
-        ParticleNetwork.setSecurityAccountConfig(SecurityAccountConfig(false))
+        ParticleNetwork.setSecurityAccountConfig(SecurityAccountConfig(1))
 
         ParticleWallet.init(this)
         if (BuildConfig.DEBUG) {

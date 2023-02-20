@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-def sdkVersion = "0.9.16"
+def sdkVersion = "0.10.1"
 Properties localProps = getLocalProperties()
 
 android {
@@ -47,7 +47,9 @@ android {
 
     buildFeatures {
         dataBinding = true
+        viewBinding =true
     }
+
 }
 
 def getLocalProperties() {

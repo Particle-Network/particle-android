@@ -85,7 +85,8 @@ class MainActivity : AppCompatActivity() {
         chainInfos.add(FantomChain(FantomChainId.Mainnet))
         chainInfos.add(FantomChain(FantomChainId.Testnet))
 
-        chainInfos.add(ArbitrumChain(ArbitrumChainId.Mainnet))
+        chainInfos.add(ArbitrumChain(ArbitrumChainId.Nova))
+        chainInfos.add(ArbitrumChain(ArbitrumChainId.One))
         chainInfos.add(ArbitrumChain(ArbitrumChainId.Goerli))
 
         chainInfos.add(HarmonyChain(HarmonyChainId.Mainnet))
@@ -170,7 +171,7 @@ class MainActivity : AppCompatActivity() {
         supportAuthTypeValue: Int = SupportAuthType.NONE.value,
     ) {
         val adapter = ParticleConnect.getAdapters().first { it is ParticleConnectAdapter }
-        val config = ParticleConnectConfig(loginType, supportAuthTypeValue)
+        val config = ParticleConnectConfig(loginType, supportAuthTypeValue,false,"")
         adapter.connect(config, object : ConnectCallback {
             override fun onConnected(account: Account) {
                 lifecycleScope.launch {
