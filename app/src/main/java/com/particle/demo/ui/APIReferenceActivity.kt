@@ -13,7 +13,9 @@ import com.particle.api.infrastructure.net.data.SerializeSOLTransReq
 import com.particle.api.service.data.ContractParams
 import com.particle.api.solana
 import com.particle.base.ParticleNetwork
+import com.particle.base.model.FeeMarketEIP1559TxData
 import com.particle.base.model.ITxData
+import com.particle.connect.ParticleConnect
 import com.particle.demo.utils.MockManger
 import com.particle.gui.router.PNRouter
 import com.particle.gui.router.RouterPath
@@ -267,9 +269,18 @@ class APIReferenceActivity : AppCompatActivity() {
     private fun testSignSendTransaction() {
         if (ParticleNetwork.isEvmChain()) {
             try {
-                val message =
-                    "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
-                ParticleNetwork.signAndSendTransaction(message,
+//                val message =
+//                    "0x7b22636861696e4964223a2230783261222c2264617461223a223078222c2266726f6d223a22307835303446383344363530323966423630376663416134336562443062373032326162313631423043222c226761734c696d6974223a22307835323038222c226d6178466565506572476173223a2230783539363832663061222c226d61785072696f72697479466565506572476173223a2230783539363832663030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307831363338306130334632314535613545333339633135424138654245353831643139346530444233222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a22307833386437656134633638303030227d"
+                val txData = FeeMarketEIP1559TxData(
+                    chainId = "0x${ParticleConnect.chainId.toString(16)}",
+                    from = ParticleNetwork.getAddress(),
+                    to = "0x504F83D65029fB607fcAa43ebD0b7022ab161B0C",
+                    value = "0x9184e72a000",
+                    gasLimit = "0x${Integer.toHexString(25000)}",
+                    maxFeePerGas = "0x9502f90e",
+                    maxPriorityFeePerGas = "0x9502F900", nonce = "0x0", data = "0x"
+                )
+                ParticleNetwork.signAndSendTransaction(txData.serialize(),
                     object : WebServiceCallback<SignOutput> {
                         override fun success(output: SignOutput) {
                             ToastUtils.showLong(getString(R.string.success))
@@ -383,7 +394,7 @@ class APIReferenceActivity : AppCompatActivity() {
     }
 
     private fun testSignMessage() {
-        val testMessage= MockManger.encode("Hello Particle")
+        val testMessage = MockManger.encode("Hello Particle")
 
         if (ParticleNetwork.isEvmChain()) {
             ParticleNetwork.signMessage(testMessage, object : WebServiceCallback<SignOutput> {
