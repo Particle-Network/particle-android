@@ -1,247 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.particle.demo.ui.MainActivity"
-        >
+        android:background="@drawable/bg_login">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:src="@drawable/twotone_settings_24"
+            android:tint="?colorOnPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/imageFilterView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/wallet_bg"
-            />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/logo"
-            />
-
-        <LinearLayout
-            android:id="@+id/icon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="220dp"
-            android:orientation="vertical"
-            >
-
-            <ImageView
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/icon"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:text="Sign in to "
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="30dp"
-                android:text="Particle Wallet"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/welcome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="220dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone"
-            tools:visibility="visible"
-            >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/welcome"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/welcome"
-                android:textColor="#000000"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                />
-        </LinearLayout>
-
-        <!--Login -->
-        <LinearLayout
-            android:id="@+id/login_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="180dp"
-            android:orientation="vertical"
-            tools:visibility="visible"
-            >
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal"
-                >
-
-                <ImageView
-                    android:id="@+id/email_login"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:src="@mipmap/ic_email"
-                    />
-
-                <ImageView
-                    android:id="@+id/phone_login"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:src="@mipmap/ic_phone"
-                    />
-
-                <ImageView
-                    android:id="@+id/google_login"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:src="@mipmap/ic_google"
-                    />
-
-                <ImageView
-                    android:id="@+id/facebook_login"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:src="@mipmap/ic_facebook"
-                    />
-
-                <ImageView
-                    android:id="@+id/apple_login"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:src="@mipmap/ic_apple"
-                    />
-
-                <ImageView
-                    android:id="@+id/twitter_login"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:src="@mipmap/ic_twitter"
-                    android:visibility="gone"
-                    />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!--        Login Success-->
-        <LinearLayout
-            android:id="@+id/login_success"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:visibility="gone"
-            tools:visibility="gone"
-            >
-
-            <Button
-                android:id="@+id/open_wallet"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="16dp"
-                android:text="@string/open_wallet"
-                />
-
-            <Button
-                android:id="@+id/logout"
-                android:visibility="gone"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/logout"
-                />
-
-            <LinearLayout
-                android:id="@+id/llSolana"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-                <Button
-                    android:id="@+id/api_reference"
-                    android:layout_width="200dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/api_reference"
-                    />
-
-
-            </LinearLayout>
-
-        </LinearLayout>
+            android:src="@drawable/ic_launcher_round"
+            app:layout_constraintBottom_toTopOf="@+id/btAuthDemo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/chain"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="-50dp"
-            android:background="@android:color/holo_red_dark"
-            android:gravity="center"
-            android:rotation="45"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="solana\nMainDev"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/pn_sdk_demo"
+            android:textColor="?colorOnPrimary"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageFilterView"
+            app:layout_constraintStart_toStartOf="@+id/imageFilterView"
+            app:layout_constraintTop_toBottomOf="@+id/imageFilterView" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btAuthDemo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:text="@string/pn_auth_demo"
+            app:layout_constraintBottom_toTopOf="@+id/btApiDemo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.55"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btApiDemo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/pn_api_demo"
+            app:layout_constraintBottom_toTopOf="@+id/btWalletDemo"
+            app:layout_constraintTop_toBottomOf="@+id/btAuthDemo"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btWalletDemo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/pn_wallet_demo"
+            app:layout_constraintBottom_toTopOf="@+id/btFaucet"
+            app:layout_constraintTop_toBottomOf="@+id/btApiDemo"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btFaucet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/pn_faucet"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btWalletDemo"
+            tools:layout_editor_absoluteX="0dp" />
 
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

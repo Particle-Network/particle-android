@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="10dp"
+            app:liftOnScroll="false">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:elevation="0dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="8dp"
+                app:buttonGravity="center_vertical"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/twotone_arrow_back_24"
+                app:title="@string/pn_auth_demo" />
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/srl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:srlEnablePureScrollMode="true">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:overScrollMode="never">
+
+                <LinearLayout
+                    android:id="@+id/login_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    tools:context="network.particle.demo.ui.MainActivity">
+
+                    <TextView
+                        android:id="@+id/chainName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textColor="?colorPrimary"
+                        android:textSize="18sp"
+                        android:visibility="gone"
+                        tools:text="Solana Chain" />
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_horizontal"
+                        android:textColor="?colorPrimary"
+                        android:textSize="18sp"
+                        android:visibility="gone"
+                        tools:text="address" />
+
+                    <Button
+                        android:id="@+id/selectChain"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_select_chain" />
+
+                    <Button
+                        android:id="@+id/init"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_init" />
+
+
+                    <Button
+                        android:id="@+id/login"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_login" />
+
+                    <Button
+                        android:id="@+id/openWebWallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_open_web_wallet" />
+
+                    <Button
+                        android:id="@+id/isLogin"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_is_login" />
+
+                    <Button
+                        android:id="@+id/isLoginAsync"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_is_login_async" />
+
+                    <Button
+                        android:id="@+id/getAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_get_address" />
+
+                    <Button
+                        android:id="@+id/getUserInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_get_userinfo" />
+
+                    <Button
+                        android:id="@+id/logout"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_logout" />
+
+                    <Button
+                        android:id="@+id/fastLogout"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_fast_logout" />
+
+                    <Button
+                        android:id="@+id/signMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_sign_message" />
+
+
+                    <Button
+                        android:id="@+id/signTransaction"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_sign_transaction" />
+
+
+                    <Button
+                        android:id="@+id/signAllTransactions"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_sign_all_transactions" />
+
+                    <Button
+                        android:id="@+id/signSendTransaction"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_sign_send_transaction" />
+
+                    <Button
+                        android:id="@+id/signTypedData"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_sign_typed_data" />
+
+                    <Button
+                        android:id="@+id/setChainInfoSync"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_set_chaininfo_sync" />
+
+                    <Button
+                        android:id="@+id/getChainInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_get_chaininfo" />
+
+                    <Button
+                        android:id="@+id/openAccountSecurity"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_open_account_security" />
+
+                    <Button
+                        android:id="@+id/setSecurityAccountConfig"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_set_security_config" />
+
+                    <Button
+                        android:id="@+id/setLanguage"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_set_language" />
+
+                    <Button
+                        android:id="@+id/setDisplayWallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_set_display_wallet" />
+
+
+                    <Button
+                        android:id="@+id/setUserInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/pn_set_userinfo" />
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

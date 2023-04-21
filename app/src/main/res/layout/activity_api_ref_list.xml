@@ -27,14 +27,14 @@
             android:orientation="vertical"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            tools:context="com.particle.demo.ui.MainActivity">
+            tools:context="network.particle.demo.ui.MainActivity">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:gravity="left"
-                android:text="@string/auth_service"
+                android:text="@string/pn_auth_service"
                 android:textColor="@android:color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/auth_tips"
+                android:text="@string/pn_auth_tips"
                 android:textColor="@color/redPrimary" />
 
             <Button
@@ -51,14 +51,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/sign_send_transaction" />
+                android:text="@string/pn_sign_send_transaction" />
 
             <Button
                 android:id="@+id/sign_transaction"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/sign_transaction"
+                android:text="@string/pn_sign_transaction"
                 android:visibility="@{isEvm?View.GONE:View.VISIBLE}" />
 
             <Button
@@ -66,14 +66,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/sign_message" />
+                android:text="@string/pn_sign_message" />
 
             <Button
                 android:id="@+id/sign_all_transaction"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/sign_all_transaction"
+                android:text="@string/pn_sign_all_transactions"
                 android:visibility="@{isEvm?View.GONE:View.VISIBLE}" />
 
             <LinearLayout
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:gravity="left"
-                    android:text="@string/api_service"
+                    android:text="@string/pn_api_service"
                     android:textColor="@android:color/black"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -97,57 +97,61 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="16dp"
-                    android:text="@string/erc20_transfer" />
+                    android:text="@string/pn_erc20_transfer" />
 
                 <Button
                     android:id="@+id/erc20_approve"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="@string/erc20_approve" />
+                    android:text="@string/pn_erc20_approve" />
 
                 <Button
                     android:id="@+id/erc20_transferFrom"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="@string/erc20_transferFrom" />
+                    android:text="@string/pn_erc20_transferFrom" />
 
                 <Button
                     android:id="@+id/erc721_safeTransferFrom"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="@string/erc721_safeTransferFrom" />
+                    android:text="@string/pn_erc721_safeTransferFrom" />
 
                 <Button
                     android:id="@+id/erc1155_safeTransferFrom"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="@string/erc1155_safeTransferFrom" />
+                    android:text="@string/pn_erc1155_safeTransferFrom" />
 
                 <Button
                     android:id="@+id/custom_abi"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="@string/custom_abi" />
+                    android:text="@string/pn_custom_abi" />
 
                 <Button
                     android:id="@+id/rpc"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="@string/rpc" />
+                    android:text="@string/pn_rpc" />
 
                 <Button
-                    android:id="@+id/read_contract"
+                    android:id="@+id/readContract"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/read_contract" />
+                    android:text="@string/pn_read_contract" />
 
                 <Button
-                    android:id="@+id/write_contract"
+                    android:id="@+id/writeContarct"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/write_contract" />
+                    android:text="@string/pn_write_contract" />
+
+                <Button
+                    android:id="@+id/deployContract"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@string/pn_deploy_contract" />
             </LinearLayout>
 
 
@@ -156,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="left"
-                android:text="@string/wallet_service"
+                android:text="@string/pn_wallet_service"
                 android:textColor="@android:color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -166,49 +170,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/open_wallet" />
+                android:text="@string/pn_open_wallet" />
 
             <Button
                 android:id="@+id/open_send_token"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/open_send_token" />
+                android:text="@string/pn_open_send_token" />
 
             <Button
                 android:id="@+id/open_receive_token"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/open_receive_token" />
+                android:text="@string/pn_open_receive_token" />
 
             <Button
                 android:id="@+id/open_transaction_records"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/open_transaction_records" />
+                android:text="@string/pn_open_transaction_records" />
 
             <Button
                 android:id="@+id/open_nft_details"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/open_nft_details" />
+                android:text="@string/pn_open_nft_details" />
 
             <Button
                 android:id="@+id/open_nft_send"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/open_nft_send" />
+                android:text="@string/pn_open_nft_send" />
+
             <Button
                 android:id="@+id/open_swap"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/open_swap" />
-
+                android:text="@string/pn_open_swap" />
         </LinearLayout>
 
     </ScrollView>
