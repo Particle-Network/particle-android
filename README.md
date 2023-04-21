@@ -9,7 +9,6 @@ This repository contains [Auth Service](https://docs.particle.network/auth-servi
 ## Getting Started
 
 * Clone the repo.
-* Create `local.properties` in project root dir if not exist.
 * Add below particle sdk config to `gradle.properties`.   
 
 ```
