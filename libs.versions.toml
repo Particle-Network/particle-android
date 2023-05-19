@@ -9,8 +9,8 @@ minSdk = "23"
 retrofit = "2.9.0"
 roomVersion = "2.4.2"
 nav_version = "2.5.0-alpha03"
-connect = "0.12.3"
-particle_network_version = "0.12.6"
+connect = "0.13.2"
+particle_network_version = "0.13.2"
 particle_network_code = "22"
 
 [libraries]
@@ -83,7 +83,6 @@ circle-progress = "com.github.xxhong:CircleProgressKt:2.1.1"
 float-menu = "com.github.xxhong:FloatMenu:0.0.1"
 toasty = "com.github.xxhong:Toasty:2.1.0"
 skeleton = "com.github.xxhong:Skeleton:2.0.3"
-collectspkg = 'com.github.xxhong:CollectsPkg:0.8.5'
 gson = "com.google.code.gson:gson:2.9.0"
 pictureselector = "io.github.lucksiege:pictureselector:v3.10.5"
 eventbus = "org.greenrobot:eventbus:3.3.1"

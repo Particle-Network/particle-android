@@ -6,6 +6,7 @@ import com.evm.adapter.EVMConnectAdapter
 import com.particle.base.*
 import com.particle.connect.ParticleConnect
 import com.particle.connect.ParticleConnectAdapter
+import com.particle.erc4337.biconomy.BiconomyService
 import com.particle.gui.ParticleWallet
 import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
@@ -61,5 +62,7 @@ object ParticleInitUtils {
             hideMainBackIcon()
         }
         ParticleNetwork.setAppliedLanguage(LanguageEnum.EN)
+        //enable AA-4337 mode
+        ParticleNetwork.setBiconomyService(BiconomyService)
     }
 }

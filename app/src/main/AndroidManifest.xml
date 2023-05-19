@@ -27,6 +27,7 @@
                 <!--                -->
                 <action android:name="network.particle.action.allwallet_exit" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
 
@@ -36,9 +37,6 @@
 
 
         </activity>
-        <activity
-            android:name="network.particle.demo.ui.APIReferenceActivity"
-            android:screenOrientation="portrait" />
         <!--   Particle Network config start     -->
         <activity
             android:name="com.particle.network.controller.WebActivity"

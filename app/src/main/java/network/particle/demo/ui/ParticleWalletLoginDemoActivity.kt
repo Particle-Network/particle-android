@@ -22,6 +22,8 @@ import com.particle.base.EthereumChain
 import com.particle.base.EthereumChainId
 import com.particle.base.SolanaChain
 import com.particle.base.SolanaChainId
+import com.particle.base.data.WebServiceCallback
+import com.particle.base.data.WebServiceError
 import com.particle.connect.ParticleConnect
 import com.particle.gui.ParticleWallet
 import network.particle.demo.ui.adapter.BannerAdapter
@@ -36,9 +38,7 @@ import com.particle.network.ParticleNetworkAuth.getAddress
 import com.particle.network.ParticleNetworkAuth.login
 import com.particle.network.service.LoginType
 import com.particle.network.service.SupportAuthType
-import com.particle.network.service.WebServiceCallback
 import com.particle.network.service.model.LoginOutput
-import com.particle.network.service.model.WebServiceError
 import com.wallet.connect.adapter.model.MobileWCWallet
 import com.zhpan.bannerview.constants.IndicatorGravity
 import com.zhpan.indicator.enums.IndicatorSlideMode

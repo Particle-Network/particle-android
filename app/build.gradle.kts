@@ -36,10 +36,9 @@ android {
             abiFilters.add("arm64-v8a")
         }
 
-        manifestPlaceholders["PN_PROJECT_ID"] = project.properties["particle.network.project_id"].toString()
-        manifestPlaceholders["PN_PROJECT_CLIENT_KEY"] = project.properties["particle.network.project_client_key"].toString()
-        manifestPlaceholders["PN_APP_ID"] = project.properties["particle.network.app_id"].toString()
-
+        manifestPlaceholders["PN_PROJECT_ID"] = "864a5dd6-9fa2-450e-88f6-0920348d069c"
+        manifestPlaceholders["PN_PROJECT_CLIENT_KEY"] = "cVq5PW9A8D5eQmps6ugwty2nfKpG0W825ijoqXk8"
+        manifestPlaceholders["PN_APP_ID"] = "3f574cac-267e-4ffa-aa2e-f284ab81e95e"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -90,6 +89,9 @@ dependencies {
     }
     implementation("network.particle:api-service:$sdkVersion")
     implementation("network.particle:wallet-service:$sdkVersion")
+
+    //if you want to use biconomy service,please add this dependency
+    implementation("network.particle:biconomy-service:$sdkVersion")
 
 
     implementation(libs.appcompat)

@@ -9,15 +9,14 @@ import com.particle.api.infrastructure.net.data.SerializeSOLTransReq
 import com.particle.api.service.data.ContractParams
 import com.particle.api.solana
 import com.particle.base.ParticleNetwork
+import com.particle.base.data.SignOutput
+import com.particle.base.data.WebServiceCallback
+import com.particle.base.data.WebServiceError
 import com.particle.base.model.ITxData
 import com.particle.network.ParticleNetworkAuth.getAddress
 import com.particle.network.ParticleNetworkAuth.signAllTransactions
 import com.particle.network.ParticleNetworkAuth.signAndSendTransaction
-import com.particle.network.ParticleNetworkAuth.signMessage
 import com.particle.network.ParticleNetworkAuth.signTransaction
-import com.particle.network.service.WebServiceCallback
-import com.particle.network.service.model.SignOutput
-import com.particle.network.service.model.WebServiceError
 
 
 import kotlinx.coroutines.launch

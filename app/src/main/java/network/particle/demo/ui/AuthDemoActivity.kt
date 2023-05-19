@@ -13,6 +13,10 @@ import com.gyf.immersionbar.ImmersionBar
 import com.minijoy.demo.R
 import com.minijoy.demo.databinding.ActivityAuthDemoBinding
 import com.particle.base.*
+import com.particle.base.data.SignOutput
+import com.particle.base.data.WebOutput
+import com.particle.base.data.WebServiceCallback
+import com.particle.base.data.WebServiceError
 import com.particle.network.ParticleNetworkAuth.fastLogout
 import com.particle.network.ParticleNetworkAuth.getAddress
 import com.particle.network.ParticleNetworkAuth.getUserInfo
