@@ -1,7 +1,5 @@
 package network.particle.demo.utils
 
-import com.connect.common.model.EIP1559TransactionData
-import com.connect.common.model.LegacyTransactionData
 import com.particle.api.evm
 import com.particle.api.infrastructure.net.data.EvmReqBodyMethod
 import com.particle.api.infrastructure.net.data.SerializeSOLTransReq

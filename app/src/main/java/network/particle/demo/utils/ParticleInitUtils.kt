@@ -21,10 +21,11 @@ object ParticleInitUtils {
 
     fun initConnect(context: Context, chainInfo: ChainInfo) {
         ParticleConnect.init(
-            context, Env.PRODUCTION, chainInfo, DAppMetadata(
+            context, Env.PRODUCTION, chainInfo, DAppMetadata("",
                 "Particle Connect",
                 "https://connect.particle.network/icons/512.png",
-                "https://connect.particle.network"
+                "https://connect.particle.network",
+                "","",""
             )
         ) {
             listOf(

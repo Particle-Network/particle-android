@@ -1,6 +1,5 @@
 [versions]
-compileSdk = "31"
-targetSdk = "31"
+
 
 compileSdkTiramisu = "33"
 targetSdkTiramisu = "33"
@@ -9,9 +8,9 @@ minSdk = "23"
 retrofit = "2.9.0"
 roomVersion = "2.4.2"
 nav_version = "2.5.0-alpha03"
-connect = "0.13.2"
-particle_network_version = "0.13.2"
-particle_network_code = "22"
+connect = "0.14.0"
+particle_network_version = "0.14.0"
+particle_network_code = "23"
 
 [libraries]
 #official

@@ -6,8 +6,6 @@ import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.connect.common.utils.Base58Utils
-import com.connect.common.utils.HexUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gyf.immersionbar.ImmersionBar
 import com.minijoy.demo.R
@@ -17,6 +15,8 @@ import com.particle.base.data.SignOutput
 import com.particle.base.data.WebOutput
 import com.particle.base.data.WebServiceCallback
 import com.particle.base.data.WebServiceError
+import com.particle.base.utils.Base58Utils
+import com.particle.base.utils.HexUtils
 import com.particle.network.ParticleNetworkAuth.fastLogout
 import com.particle.network.ParticleNetworkAuth.getAddress
 import com.particle.network.ParticleNetworkAuth.getUserInfo

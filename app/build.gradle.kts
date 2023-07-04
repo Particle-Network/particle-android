@@ -6,26 +6,16 @@ plugins {
     kotlin("android")
     kotlin("kapt")
 }
-val useTiramisu = project.properties["useTiramisu"].toString().toBoolean()
 val sdkVersion = libs.versions.particle.network.version.get()
-val pnCompileSdk = if (useTiramisu) {
-    libs.versions.compileSdkTiramisu.get().toInt()
-} else {
-    libs.versions.compileSdk.get().toInt()
-}
-val pnTargetSdk = if (useTiramisu) {
-    libs.versions.targetSdkTiramisu.get().toInt()
-} else {
-    libs.versions.targetSdk.get().toInt()
-}
+
 
 android {
 
-    compileSdk = pnCompileSdk
+    compileSdk = libs.versions.compileSdkTiramisu.get().toInt()
     defaultConfig {
         applicationId = "network.particle.demos"
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = pnTargetSdk
+        targetSdk = libs.versions.targetSdkTiramisu.get().toInt()
         versionCode = 5
         versionName = "$sdkVersion"
         vectorDrawables {
@@ -79,14 +69,16 @@ android {
 
 
 dependencies {
+    modules {
+        module("org.bouncycastle:bcprov-jdk15to18") {
+            replacedBy("org.bouncycastle:bcprov-jdk15on")
+        }
+    }
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
     //auth-service and auth-service-tiramisu are the same library,
     //tiramisu requires android targetSdkVersion 33,it supports auth web half screen
-    if (useTiramisu) {
-        implementation("network.particle:auth-service-tiramisu:$sdkVersion")
-    } else {
-        implementation("network.particle:auth-service:$sdkVersion")
-    }
+//    implementation("network.particle:auth-service:$sdkVersion")
+    implementation("network.particle:auth-service-tiramisu:$sdkVersion")
     implementation("network.particle:api-service:$sdkVersion")
     implementation("network.particle:wallet-service:$sdkVersion")
 
