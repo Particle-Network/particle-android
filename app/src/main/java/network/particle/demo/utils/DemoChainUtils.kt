@@ -30,7 +30,6 @@ object DemoChainUtils {
         chainInfos.add(MoonriverChain(MoonriverChainId.Testnet))
 
         chainInfos.add(HecoChain(HecoChainId.Mainnet))
-        chainInfos.add(HecoChain(HecoChainId.Testnet))
 
         chainInfos.add(FantomChain(FantomChainId.Mainnet))
         chainInfos.add(FantomChain(FantomChainId.Testnet))
@@ -126,7 +125,6 @@ object DemoChainUtils {
         faucetMap[ArbitrumChainId.Goerli.id] = "https://faucet.triangleplatform.com/arbitrum/goerli"
         faucetMap[MoonbeamChainId.Testnet.id] = "https://apps.moonbeam.network/moonbase-alpha/faucet/"
         faucetMap[MoonriverChainId.Testnet.id] = "https://apps.moonbeam.network/moonbase-alpha/faucet/"
-        faucetMap[HecoChainId.Testnet.id] = "https://scan-testnet.hecochain.com/faucet"
         faucetMap[AuroraChainId.Testnet.id] = "https://aurora.dev/faucet"
         faucetMap[HarmonyChainId.Testnet.id] = "https://faucet.pops.one/"
         faucetMap[OptimismChainId.Goerli.id] = "https://faucet.triangleplatform.com/optimism/goerli"

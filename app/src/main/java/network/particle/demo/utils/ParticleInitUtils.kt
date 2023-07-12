@@ -1,9 +1,10 @@
 package network.particle.demo.utils
 
+import android.app.Application
 import android.content.Context
-import com.connect.common.model.DAppMetadata
 import com.evm.adapter.EVMConnectAdapter
 import com.particle.base.*
+import com.particle.base.model.DAppMetadata
 import com.particle.connect.ParticleConnect
 import com.particle.connect.ParticleConnectAdapter
 import com.particle.erc4337.biconomy.BiconomyService
@@ -19,14 +20,16 @@ object ParticleInitUtils {
         ParticleNetwork.init(context, Env.PRODUCTION, chainInfo)
     }
 
-    fun initConnect(context: Context, chainInfo: ChainInfo) {
+    fun initConnect(app: Application, chainInfo: ChainInfo) {
+        val dAppMetadata = DAppMetadata(
+            "f431aaea6e4dea6a669c0496f9c009c1",
+            "Particle Connect",
+            "https://connect.particle.network/icons/512.png",
+            "https://particle.network",
+            description = "Particle Connect is a decentralized wallet connection protocol that makes it easy for users to connect their wallets to your DApp.",
+        )
         ParticleConnect.init(
-            context, Env.PRODUCTION, chainInfo, DAppMetadata("",
-                "Particle Connect",
-                "https://connect.particle.network/icons/512.png",
-                "https://connect.particle.network",
-                "","",""
-            )
+            app, Env.PRODUCTION, chainInfo, dAppMetadata
         ) {
             listOf(
                 ParticleConnectAdapter(),
@@ -43,8 +46,8 @@ object ParticleInitUtils {
         }
     }
 
-    fun initWallet(context: Context, chainInfo: ChainInfo) {
-        initConnect(context, chainInfo)
+    fun initWallet(app: Application, chainInfo: ChainInfo) {
+        initConnect(app, chainInfo)
         /**
          *  supportChains is optional,, if not provided, all chains will be supported
          *  if provided, only the chains in the list will be supported,Only the main chain is required,
@@ -56,7 +59,7 @@ object ParticleInitUtils {
             BscChain(BscChainId.Mainnet)
         )
         ParticleWallet.init(
-            context
+            app
         ).apply {
             showTestNetworks(true)
             showSettingManageWallet(true)
