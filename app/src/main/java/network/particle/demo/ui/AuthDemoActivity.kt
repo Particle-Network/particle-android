@@ -94,7 +94,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
         }
 
         binding.openWebWallet.setOnClickListener {
-            ParticleNetwork.openWebWallet()
+            ParticleNetwork.openWebWallet(this@AuthDemoActivity)
         }
 
         binding.isLogin.setOnClickListener {

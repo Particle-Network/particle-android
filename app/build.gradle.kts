@@ -75,10 +75,7 @@ dependencies {
         }
     }
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
-    //auth-service and auth-service-tiramisu are the same library,
-    //tiramisu requires android targetSdkVersion 33,it supports auth web half screen
-//    implementation("network.particle:auth-service:$sdkVersion")
-    implementation("network.particle:auth-service-tiramisu:$sdkVersion")
+    implementation("network.particle:auth-service:$sdkVersion")
     implementation("network.particle:api-service:$sdkVersion")
     implementation("network.particle:wallet-service:$sdkVersion")
 
