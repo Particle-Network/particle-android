@@ -4,9 +4,11 @@ import android.app.Application
 import android.content.Context
 import com.evm.adapter.EVMConnectAdapter
 import com.particle.base.*
+import com.particle.base.model.BiconomyVersion
 import com.particle.base.model.DAppMetadata
 import com.particle.connect.ParticleConnect
 import com.particle.connect.ParticleConnectAdapter
+import com.particle.erc4337.ParticleNetworkBiconomy.initBiconomyMode
 import com.particle.erc4337.biconomy.BiconomyService
 import com.particle.gui.ParticleWallet
 import com.phantom.adapter.PhantomConnectAdapter
@@ -67,6 +69,13 @@ object ParticleInitUtils {
         }
         ParticleNetwork.setAppliedLanguage(LanguageEnum.EN)
         //enable AA-4337 mode
-        ParticleNetwork.setBiconomyService(BiconomyService)
+//        ParticleNetwork.initBiconomyMode(
+//            mapOf(
+//                EthereumChainId.Mainnet.id to "your key",
+//            ),
+//            BiconomyVersion.V100
+//        )
+//        ParticleNetwork.setBiconomyService(BiconomyService)
+//        ParticleNetwork.getBiconomyService().enableBiconomyMode()
     }
 }
