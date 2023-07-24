@@ -8,7 +8,7 @@ minSdk = "23"
 retrofit = "2.9.0"
 roomVersion = "2.5.0"
 nav_version = "2.5.0-alpha03"
-connect = "0.15.1"
+connect = "0.15.2"
 particle_network_version = "0.15.1"
 particle_network_code = "23"
 

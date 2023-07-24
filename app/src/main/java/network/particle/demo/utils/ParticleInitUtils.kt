@@ -69,13 +69,13 @@ object ParticleInitUtils {
         }
         ParticleNetwork.setAppliedLanguage(LanguageEnum.EN)
         //enable AA-4337 mode
-//        ParticleNetwork.initBiconomyMode(
-//            mapOf(
-//                EthereumChainId.Mainnet.id to "your key",
-//            ),
-//            BiconomyVersion.V100
-//        )
-//        ParticleNetwork.setBiconomyService(BiconomyService)
-//        ParticleNetwork.getBiconomyService().enableBiconomyMode()
+        ParticleNetwork.initBiconomyMode(
+            mapOf(
+                EthereumChainId.Mainnet.id to "your key",
+            ),
+            BiconomyVersion.V100
+        )
+        ParticleNetwork.setBiconomyService(BiconomyService)
+        ParticleNetwork.getBiconomyService().enableBiconomyMode()
     }
 }

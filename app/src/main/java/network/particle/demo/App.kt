@@ -13,7 +13,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         DynamicColors.applyToActivitiesIfAvailable(this)
-        ParticleInitUtils.initWallet(this, EthereumChain(EthereumChainId.Goerli))
+        ParticleInitUtils.initWallet(this, EthereumChain(EthereumChainId.Mainnet))
     }
 
 
