@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.minijoy.demo.R
-import com.particle.base.ChainInfo
+import network.particle.chains.ChainInfo
 
 
 class ChainInfoChoiceListAdapter(private val context: Context, private val list: List<ChainInfo>) : BaseAdapter() {
@@ -31,7 +31,7 @@ class ChainInfoChoiceListAdapter(private val context: Context, private val list:
         }
         val item = getItem(position)
         val titleTextView = view!!.findViewById<TextView>(com.particle.gui.R.id.tvChainName)
-        titleTextView.text = "${item.chainName.displayName} ${item.chainId}(${item.chainId.value()})"
+        titleTextView.text = "${item.name} ${item.id}"
         return view
     }
 }

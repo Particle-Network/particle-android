@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Particleandroid"
         android:usesCleartextTraffic="true"
-        tools:replace="android:label">
+        android:fullBackupContent="@xml/backup_rules"
+        tools:replace="android:label,android:fullBackupContent">
 
 
         <activity

@@ -76,20 +76,11 @@
             android:layout_marginHorizontal="50dp"
             android:layout_marginTop="10dp"
             android:text="@string/pn_wallet_demo"
-            app:layout_constraintBottom_toTopOf="@+id/btFaucet"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btApiDemo"
             tools:layout_editor_absoluteX="0dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btFaucet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/pn_faucet"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btWalletDemo"
-            tools:layout_editor_absoluteX="0dp" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,6 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.connect.common.IConnectAdapter
 import com.minijoy.demo.R
-import com.particle.base.ChainInfo
 
 
 class ConnectChoiceListAdapter(private val context: Context, private val list: List<IConnectAdapter>) : BaseAdapter() {

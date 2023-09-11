@@ -12,7 +12,6 @@ import com.particle.base.model.TxAction
 import com.particle.base.model.TxData
 import com.particle.base.utils.gweiToHexStr
 import com.particle.base.utils.toHexStr
-import com.particle.gui.ParticleWallet.getUserPublicKey
 import com.particle.network.ParticleNetworkAuth.getAddress
 import okhttp3.internal.toHexString
 import org.json.JSONObject
@@ -46,7 +45,7 @@ object TransactionMock {
         val suggestedGasFees = ParticleNetwork.evm.suggestedGasFees()
         val high = suggestedGasFees.result.high
         val transaction: ITxData
-        if (ParticleNetwork.chainInfo.chainName.evm1559support) {
+        if (ParticleNetwork.chainInfo.isEIP1559Supported()) {
             transaction = FeeMarketEIP1559TxData(
                 high.maxPriorityFeePerGas.gweiToHexStr(),
                 high.maxFeePerGas.gweiToHexStr(),
@@ -61,7 +60,7 @@ object TransactionMock {
         } else {
             transaction = TxData(
                 chainId = ParticleNetwork.chainId.toString().toHexStr(),
-                from = ParticleNetwork.getUserPublicKey(),
+                from = ParticleNetwork.getAddress(),
                 to = to,
                 value = "0x$amount",
                 data = "0x",

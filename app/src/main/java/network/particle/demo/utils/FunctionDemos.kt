@@ -1,17 +1,15 @@
 package network.particle.demo.ui
 
-import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.minijoy.demo.R
 import com.particle.api.evm
 import com.particle.api.infrastructure.net.data.SerializeSOLTransReq
 import com.particle.api.service.data.ContractParams
 import com.particle.api.solana
 import com.particle.base.ParticleNetwork
+import com.particle.base.data.ErrorInfo
 import com.particle.base.data.SignOutput
 import com.particle.base.data.WebServiceCallback
-import com.particle.base.data.WebServiceError
 import com.particle.base.model.ITxData
 import com.particle.network.ParticleNetworkAuth.getAddress
 import com.particle.network.ParticleNetworkAuth.signAllTransactions
@@ -39,7 +37,7 @@ object FunctionDemos {
                     override fun success(output: SignOutput) {
                     }
 
-                    override fun failure(errMsg: WebServiceError) {
+                    override fun failure(errMsg: ErrorInfo) {
                     }
                 })
             } catch (e: Exception) {
@@ -56,7 +54,7 @@ object FunctionDemos {
                     override fun success(output: SignOutput) {
                     }
 
-                    override fun failure(errMsg: WebServiceError) {
+                    override fun failure(errMsg: ErrorInfo) {
                     }
                 })
             } catch (e: Exception) {
@@ -75,7 +73,7 @@ object FunctionDemos {
                         ToastUtils.showLong(output.signature)
                     }
 
-                    override fun failure(errMsg: WebServiceError) {
+                    override fun failure(errMsg: ErrorInfo) {
                         ToastUtils.showLong("error code:${errMsg.code} message:${errMsg.message}")
                     }
                 })
@@ -94,7 +92,7 @@ object FunctionDemos {
                     override fun success(output: SignOutput) {
                     }
 
-                    override fun failure(errMsg: WebServiceError) {
+                    override fun failure(errMsg: ErrorInfo) {
                     }
                 })
             } catch (e: Exception) {
@@ -115,7 +113,7 @@ object FunctionDemos {
                 //sign success
             }
 
-            override fun failure(errMsg: WebServiceError) {
+            override fun failure(errMsg: ErrorInfo) {
                 // handle error
             }
         })
@@ -141,7 +139,7 @@ object FunctionDemos {
                 //sign success
             }
 
-            override fun failure(errMsg: WebServiceError) {
+            override fun failure(errMsg: ErrorInfo) {
                 // handle error
             }
         })
@@ -161,7 +159,7 @@ object FunctionDemos {
                 LogUtils.d(output.signature)
             }
 
-            override fun failure(errMsg: WebServiceError) {
+            override fun failure(errMsg: ErrorInfo) {
                 // handle error
                 LogUtils.d(errMsg)
             }

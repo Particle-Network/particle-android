@@ -39,24 +39,5 @@ class MainActivity : DemoBaseActivity<ActivityMainBinding>(R.layout.activity_mai
             startActivity(Intent(this, WalletDemoActivity::class.java))
 
         }
-        binding.btFaucet.setOnClickListener {
-            if (!ParticleNetwork.isWalletLogin()) {
-                startActivity(Intent(this, ParticleWalletLoginDemoActivity::class.java))
-                return@setOnClickListener
-            }
-            val chainInfos = DemoChainUtils.getAllTestnet()
-            MaterialAlertDialogBuilder(this@MainActivity).setTitle(getString(R.string.pn_select_chain))
-                .setSingleChoiceItems(ChainInfoChoiceListAdapter(this@MainActivity, chainInfos), 0) { dialog, which ->
-                    val chainInfo = chainInfos[which]
-                    ParticleConnect.setChain(chainInfo)
-                    val faucetUrl = DemoChainUtils.getFaucet(chainInfo.chainId.value())
-                    if (faucetUrl == null) {
-                        ToastUtils.showLong("No faucet for this chain")
-                        return@setSingleChoiceItems
-                    }
-                    ParticleNetwork.navigatorDAppBrowser(faucetUrl)
-                    dialog.dismiss()
-                }.show()
-        }
     }
 }

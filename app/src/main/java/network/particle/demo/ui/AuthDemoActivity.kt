@@ -11,10 +11,15 @@ import com.gyf.immersionbar.ImmersionBar
 import com.minijoy.demo.R
 import com.minijoy.demo.databinding.ActivityAuthDemoBinding
 import com.particle.base.*
+import com.particle.base.data.ErrorInfo
 import com.particle.base.data.SignOutput
 import com.particle.base.data.WebOutput
 import com.particle.base.data.WebServiceCallback
-import com.particle.base.data.WebServiceError
+import com.particle.base.model.LoginType
+import com.particle.base.model.ResultCallback
+import com.particle.base.model.SecurityAccountConfig
+import com.particle.base.model.SupportAuthType
+import com.particle.base.model.UserInfo
 import com.particle.base.utils.Base58Utils
 import com.particle.base.utils.HexUtils
 import com.particle.network.ParticleNetworkAuth.fastLogout
@@ -26,18 +31,17 @@ import com.particle.network.ParticleNetworkAuth.login
 import com.particle.network.ParticleNetworkAuth.logout
 import com.particle.network.ParticleNetworkAuth.openAccountAndSecurity
 import com.particle.network.ParticleNetworkAuth.openWebWallet
-import com.particle.network.ParticleNetworkAuth.setChainInfo
-import com.particle.network.ParticleNetworkAuth.setSecurityAccountConfig
-import com.particle.network.ParticleNetworkAuth.setUserInfo
 import com.particle.network.ParticleNetworkAuth.signAllTransactions
 import com.particle.network.ParticleNetworkAuth.signAndSendTransaction
 import com.particle.network.ParticleNetworkAuth.signMessage
 import com.particle.network.ParticleNetworkAuth.signTransaction
 import com.particle.network.ParticleNetworkAuth.signTypedData
+import com.particle.network.ParticleNetworkAuth.switchChain
 import com.particle.network.SignTypedDataVersion
 import com.particle.network.service.*
 import com.particle.network.service.model.*
 import kotlinx.coroutines.launch
+import network.particle.chains.ChainInfo
 import network.particle.demo.ui.adapter.ChainInfoChoiceListAdapter
 import network.particle.demo.ui.base.DemoBaseActivity
 import network.particle.demo.utils.DemoChainUtils
@@ -79,15 +83,14 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
             val supportAuthTypeAll = SupportAuthType.ALL.value
             //if you want to use google or facebook login, you can set the authType to SupportAuthType.GOOGLE.value or SupportAuthType.FACEBOOK.value
             val supportAuthType2 = SupportAuthType.GOOGLE.value or SupportAuthType.FACEBOOK.value
-            ParticleNetwork.login(LoginType.EMAIL,
-                supportAuthTypeAll,
-                loginFormMode = false,
-                loginCallback = object : WebServiceCallback<LoginOutput> {
-                    override fun success(output: LoginOutput) {
+            ParticleNetwork.login(
+                LoginType.EMAIL,"",supportAuthTypeAll,
+                loginCallback = object : WebServiceCallback<UserInfo> {
+                    override fun success(output: UserInfo) {
                         updateAddress()
                     }
 
-                    override fun failure(errMsg: WebServiceError) {
+                    override fun failure(errMsg: ErrorInfo) {
                         ToastUtils.showLong(errMsg.message)
                     }
                 })
@@ -125,22 +128,20 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
                     ToastUtils.showLong(getString(R.string.pn_logout_success))
                 }
 
-                override fun failure(errMsg: WebServiceError) {
+                override fun failure(errMsg: ErrorInfo) {
                     ToastUtils.showLong(errMsg.message)
                 }
             })
         }
 
         binding.fastLogout.setOnClickListener {
-            ParticleNetwork.fastLogout(object : FastLogoutCallBack {
-                override fun success() {
-                    currChainInfo = null
-                    ToastUtils.showLong(getString(R.string.pn_logout_success))
+            ParticleNetwork.fastLogout(object : ResultCallback {
+                override fun failure() {
                 }
 
-                override fun failure() {
-                    ToastUtils.showLong(getString(R.string.pn_fastlogout_failed))
+                override fun success() {
                 }
+
             })
         }
 
@@ -148,7 +149,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
             if (checkCurrChainInfo()) return@setOnClickListener
             if (checkIsLogin()) return@setOnClickListener
             val message = "Hello Particle Network"
-            val encodeMessage = if (currChainInfo is EvmChain) {
+            val encodeMessage = if (currChainInfo!!.isEvmChain()) {
                 HexUtils.encodeWithPrefix(message.toByteArray(Charsets.UTF_8))
             } else {
                 Base58Utils.encode(message.toByteArray(Charsets.UTF_8))
@@ -158,7 +159,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
                     showMessageDialog(getString(R.string.pn_sign_message), output.signature!!)
                 }
 
-                override fun failure(errMsg: WebServiceError) {
+                override fun failure(errMsg: ErrorInfo) {
                     showMessageDialog(getString(R.string.pn_sign_message), "code:${errMsg.code} \nmessage:${errMsg.message}")
                 }
             })
@@ -179,7 +180,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
                         showMessageDialog(getString(R.string.pn_sign_transaction), output.signature!!)
                     }
 
-                    override fun failure(errMsg: WebServiceError) {
+                    override fun failure(errMsg: ErrorInfo) {
                         showMessageDialog(getString(R.string.pn_sign_transaction), "code:${errMsg.code} \nmessage:${errMsg.message}")
                     }
                 })
@@ -202,7 +203,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
                         showMessageDialog(getString(R.string.pn_sign_all_transactions), output.signature!!)
                     }
 
-                    override fun failure(errMsg: WebServiceError) {
+                    override fun failure(errMsg: ErrorInfo) {
                         showMessageDialog(getString(R.string.pn_sign_all_transactions), "code:${errMsg.code} \nmessage:${errMsg.message}")
                     }
                 })
@@ -226,7 +227,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
                         showMessageDialog(getString(R.string.pn_sign_send_transaction), output.signature!!)
                     }
 
-                    override fun failure(errMsg: WebServiceError) {
+                    override fun failure(errMsg: ErrorInfo) {
                         showMessageDialog(getString(R.string.pn_sign_send_transaction), "code:${errMsg.code} \nmessage:${errMsg.message}")
                     }
                 })
@@ -248,7 +249,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
                     showMessageDialog(getString(R.string.pn_sign_typed_data), output.signature!!)
                 }
 
-                override fun failure(errMsg: WebServiceError) {
+                override fun failure(errMsg: ErrorInfo) {
                     showMessageDialog(getString(R.string.pn_sign_typed_data), "code:${errMsg.code} \nmessage:${errMsg.message}")
                 }
             })
@@ -256,7 +257,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
 
         // If you login to solana, you do not have an evm wallet address, you need to call this method to switch to the evm chain, this method will create an evm wallet
         binding.setChainInfoSync.setOnClickListener {
-            ParticleNetwork.setChainInfo(EthereumChain(EthereumChainId.Goerli), object : ChainChangeCallBack {
+            ParticleNetwork.switchChain(ChainInfo.EthereumGoerli, object : ResultCallback {
                 override fun success() {
                     showMessageDialog(getString(R.string.pn_set_chaininfo_sync), "success")
                 }
@@ -269,7 +270,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
 
         binding.getChainInfo.setOnClickListener {
             val chainInfo = ParticleNetwork.chainInfo
-            val chainInfoStr = "${chainInfo.chainName.displayName} ${chainInfo.chainId}(${chainInfo.chainId.value()})"
+            val chainInfoStr = "${chainInfo.name} ${chainInfo.id}"
             showMessageDialog(getString(R.string.pn_get_chaininfo), chainInfoStr)
         }
 
@@ -279,7 +280,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
 
                 }
 
-                override fun failure(errMsg: WebServiceError) {
+                override fun failure(errMsg: ErrorInfo) {
                     if (errMsg.code == 10005 || errMsg.code == 8005) {
                         //You've been knocked out.
                     }
@@ -297,14 +298,9 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
 
         binding.setLanguage.setOnClickListener {
             val isRelaunchApp = true //True to relaunch app, false to recreate all activities.
-            ParticleNetwork.setAppliedLanguage(LanguageEnum.EN, isRelaunchApp)
+            ParticleNetwork.setLanguage(LanguageEnum.EN, isRelaunchApp)
         }
 
-        //If you have logged in to Particle on other platforms, you can log in directly using json without having to jump to Particle again.
-        binding.setUserInfo.setOnClickListener {
-            val userInfoJson = ""
-            ParticleNetwork.setUserInfo(userInfoJson)
-        }
 
     }
 
@@ -333,7 +329,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
 
     private fun updateChainName() {
         currChainInfo?.apply {
-            binding.chainName.text = "${chainName.displayName} ${chainId}(${chainId.value()})"
+            binding.chainName.text = "${name} ${fullname}(${id})"
             binding.chainName.visibility = View.VISIBLE
         }
     }

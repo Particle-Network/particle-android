@@ -4,16 +4,16 @@ import android.app.Application
 import android.content.Context
 import com.evm.adapter.EVMConnectAdapter
 import com.particle.base.*
-import com.particle.base.model.BiconomyVersion
 import com.particle.base.model.DAppMetadata
 import com.particle.connect.ParticleConnect
-import com.particle.connect.ParticleConnectAdapter
 import com.particle.erc4337.ParticleNetworkBiconomy.initBiconomyMode
 import com.particle.erc4337.biconomy.BiconomyService
 import com.particle.gui.ParticleWallet
 import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
 import com.wallet.connect.adapter.*
+import network.particle.chains.ChainInfo
+import particle.auth.adapter.ParticleConnectAdapter
 
 object ParticleInitUtils {
 
@@ -55,25 +55,20 @@ object ParticleInitUtils {
          *  if provided, only the chains in the list will be supported,Only the main chain is required,
          *  if you want to support devnet, you can call showTestNetworks() to show the devnet networks
          */
-        val supportChains = mutableListOf(
-            SolanaChain(SolanaChainId.Mainnet),
-            EthereumChain(EthereumChainId.Mainnet),
-            BscChain(BscChainId.Mainnet)
-        )
+
         ParticleWallet.init(
             app
         ).apply {
-            showTestNetworks(true)
-            showSettingManageWallet(true)
+            setShowTestNetworkSetting(true)
+            setShowManageWalletSetting(true)
             hideMainBackIcon()
         }
-        ParticleNetwork.setAppliedLanguage(LanguageEnum.EN)
+        ParticleNetwork.setLanguage(LanguageEnum.EN)
         //enable AA-4337 mode
         ParticleNetwork.initBiconomyMode(
             mapOf(
                 EthereumChainId.Mainnet.id to "your key",
-            ),
-            BiconomyVersion.V100
+            )
         )
         ParticleNetwork.setBiconomyService(BiconomyService)
         ParticleNetwork.getBiconomyService().enableBiconomyMode()

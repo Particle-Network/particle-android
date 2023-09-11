@@ -9,10 +9,11 @@ import com.gyf.immersionbar.ImmersionBar
 import com.minijoy.demo.R
 import com.minijoy.demo.databinding.ActivityApiDemoBinding
 import com.particle.api.evm
-import com.particle.api.infrastructure.db.table.WalletType
 import com.particle.api.service.data.ContractParams
 import com.particle.base.ParticleNetwork
-import com.particle.gui.ParticleWallet.getUserPublicKey
+import com.particle.base.model.MobileWCWallet
+import com.particle.base.model.MobileWCWalletName
+import com.particle.connect.ParticleConnect
 import com.particle.gui.utils.WalletUtils
 import com.particle.network.ParticleNetworkAuth.getAddress
 import kotlinx.coroutines.launch
@@ -61,9 +62,9 @@ class ApiDemoActivity : DemoBaseActivity<ActivityApiDemoBinding>(R.layout.activi
 //                        }
 //
 //                    })
-                    val adapter = WalletUtils.getConnectAdapter(WalletType.PN_WALLET)
+                    val adapter = ParticleConnect.getAdapters().first { it.name ==MobileWCWalletName.Particle.name }
                     val data = iTxData2!!.serialize()
-                    adapter!!.signAndSendTransaction(ParticleNetwork.getUserPublicKey(), data, object : TransactionCallback {
+                    adapter!!.signAndSendTransaction(ParticleNetwork.getAddress(), data, object : TransactionCallback {
                         override fun onError(error: ConnectError) {
                             LogUtils.d("sign onError")
                         }
