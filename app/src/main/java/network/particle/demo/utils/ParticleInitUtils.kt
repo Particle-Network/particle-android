@@ -6,8 +6,8 @@ import com.evm.adapter.EVMConnectAdapter
 import com.particle.base.*
 import com.particle.base.model.DAppMetadata
 import com.particle.connect.ParticleConnect
-import com.particle.erc4337.ParticleNetworkBiconomy.initBiconomyMode
-import com.particle.erc4337.biconomy.BiconomyService
+import com.particle.erc4337.ParticleNetworkAA.initAAMode
+import com.particle.erc4337.aa.AAService
 import com.particle.gui.ParticleWallet
 import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
@@ -65,12 +65,12 @@ object ParticleInitUtils {
         }
         ParticleNetwork.setLanguage(LanguageEnum.EN)
         //enable AA-4337 mode
-        ParticleNetwork.initBiconomyMode(
+        ParticleNetwork.initAAMode(
             mapOf(
                 EthereumChainId.Mainnet.id to "your key",
             )
         )
-        ParticleNetwork.setBiconomyService(BiconomyService)
-        ParticleNetwork.getBiconomyService().enableBiconomyMode()
+        ParticleNetwork.setAAService(AAService)
+        ParticleNetwork.getAAService().enableAAMode()
     }
 }

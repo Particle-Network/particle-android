@@ -80,7 +80,7 @@ dependencies {
     implementation("network.particle:wallet-service:$sdkVersion")
 
     //if you want to use biconomy service,please add this dependency
-    implementation("network.particle:biconomy-service:$sdkVersion")
+    implementation("network.particle:aa-service:$sdkVersion")
 
 
     implementation(libs.appcompat)

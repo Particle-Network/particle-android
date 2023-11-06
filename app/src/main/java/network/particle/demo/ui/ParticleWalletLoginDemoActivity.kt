@@ -23,6 +23,7 @@ import com.particle.base.model.LoginType
 import com.particle.base.model.MobileWCWallet
 import com.particle.base.model.MobileWCWalletName
 import com.particle.base.model.SupportAuthType
+import com.particle.base.model.WalletName
 import com.particle.connect.ParticleConnect
 import com.particle.gui.ParticleWallet
 import network.particle.demo.ui.adapter.BannerAdapter
@@ -63,10 +64,28 @@ class ParticleWalletLoginDemoActivity :
     override fun setListeners() {
         super.setListeners()
         binding.rlLoginEmail.setOnClickListener {
-            loginWithPn(LoginType.EMAIL)
+//            loginWithPn(LoginType.EMAIL)
+            ParticleConnect.setChain(ChainInfo.Ethereum)
+            val qrFragment = WalletConnectTabFragment()
+            qrFragment.setConnectCallback(object : WallectConnectTabCallback {
+                override fun onConnect(account: Account, wallectName: String) {
+                    qrFragment.dismissAllowingStateLoss()
+                    lifecycleScope.launch {
+                        val wallet =
+                            WalletUtils.createSelectedWallet(account.publicAddress, wallectName)
+                        ParticleWallet.setWallet(wallet)
+                        openWallet()
+                    }
+                }
+
+                override fun onConnectError(error: ConnectError) {
+                    qrFragment.dismissAllowingStateLoss()
+                }
+            })
+            qrFragment.show(supportFragmentManager, "WalletConnectTabFragment")
         }
         binding.rlLoginMetaMask.setOnClickListener {
-            connectEvmWallet(MobileWCWalletName.MetaMask)
+            connectEvmWallet(MobileWCWallet.MetaMask)
         }
         binding.ivGoogle.setOnClickListener {
             loginWithPn(LoginType.GOOGLE)
@@ -86,26 +105,26 @@ class ParticleWalletLoginDemoActivity :
                     loginWithPn(loginType)
                 }
 
-                override fun onLoginConnect(walletName: String) {
+                override fun onLoginConnect(walletName: WalletName) {
                     when (walletName) {
                         MobileWCWalletName.MetaMask.name -> {
-                            connectEvmWallet(MobileWCWalletName.MetaMask)
+                            connectEvmWallet(MobileWCWallet.MetaMask)
                         }
 
                         MobileWCWalletName.Rainbow.name -> {
-                            connectEvmWallet(MobileWCWalletName.Rainbow)
+                            connectEvmWallet(MobileWCWallet.Rainbow)
                         }
 
                         MobileWCWalletName.Trust.name -> {
-                            connectEvmWallet(MobileWCWalletName.Trust)
+                            connectEvmWallet(MobileWCWallet.Trust)
                         }
 
                         MobileWCWalletName.ImToken.name -> {
-                            connectEvmWallet(MobileWCWalletName.ImToken)
+                            connectEvmWallet(MobileWCWallet.ImToken)
                         }
 
                         MobileWCWalletName.BitKeep.name -> {
-                            connectEvmWallet(MobileWCWalletName.BitKeep)
+                            connectEvmWallet(MobileWCWallet.BitKeep)
                         }
 
                         MobileWCWalletName.WalletConnect.name -> {
@@ -117,12 +136,14 @@ class ParticleWalletLoginDemoActivity :
                         }
 
                         MobileWCWalletName.SolanaConnect.name -> {
-                            val intent = PrivateKeyLoginActivity.newIntent(this@ParticleWalletLoginDemoActivity)
+                            val intent =
+                                PrivateKeyLoginActivity.newIntent(this@ParticleWalletLoginDemoActivity)
                             launcherResult.launch(intent)
                         }
 
                         MobileWCWalletName.EVMConnect.name -> {
-                            val intent = PrivateKeyLoginActivity.newIntent(this@ParticleWalletLoginDemoActivity)
+                            val intent =
+                                PrivateKeyLoginActivity.newIntent(this@ParticleWalletLoginDemoActivity)
                             launcherResult.launch(intent)
                         }
 
@@ -161,8 +182,9 @@ class ParticleWalletLoginDemoActivity :
     private fun loginWithPn(
         loginType: LoginType, supportAuthType: SupportAuthType = SupportAuthType.ALL
     ) {
-        val pnAdapter = ParticleConnect.getAdapters().first { it.name == MobileWCWalletName.Particle.name }
-        val config = ParticleConnectConfig(loginType=loginType)
+        val pnAdapter =
+            ParticleConnect.getAdapters().first { it.name == MobileWCWalletName.Particle.name }
+        val config = ParticleConnectConfig(loginType = loginType)
 
         pnAdapter.connect(config, object : ConnectCallback {
             override fun onConnected(account: Account) {
@@ -180,9 +202,10 @@ class ParticleWalletLoginDemoActivity :
     }
 
 
-    private fun connectEvmWallet(mobileWallet: MobileWCWalletName) {
+    private fun connectEvmWallet(mobileWallet: MobileWCWallet) {
         ParticleConnect.setChain(ChainInfo.Ethereum)
-        val adapter = ParticleConnect.getAdapters(ChainType.EVM).first { it.name == mobileWallet.name }
+        val adapter =
+            ParticleConnect.getAdapters(ChainType.EVM).first { it.name == mobileWallet.name }
         adapter.connect(null, object : ConnectCallback {
             override fun onConnected(account: Account) {
                 lifecycleScope.launch {
@@ -204,7 +227,8 @@ class ParticleWalletLoginDemoActivity :
             override fun onConnect(account: Account, wallectName: String) {
                 qrFragment.dismissAllowingStateLoss()
                 lifecycleScope.launch {
-                    val wallet = WalletUtils.createSelectedWallet(account.publicAddress, wallectName)
+                    val wallet =
+                        WalletUtils.createSelectedWallet(account.publicAddress, wallectName)
                     ParticleWallet.setWallet(wallet)
                     openWallet()
                 }

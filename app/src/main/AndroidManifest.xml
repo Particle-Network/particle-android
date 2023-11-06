@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.minijoy.demo">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,14 +14,16 @@
     <application
         android:name="network.particle.demo.App"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/pn_backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/pn_app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Particleandroid"
         android:usesCleartextTraffic="true"
-        android:fullBackupContent="@xml/backup_rules"
-        tools:replace="android:label,android:fullBackupContent">
+        tools:replace="android:label,android:fullBackupContent"
+        >
+
 
 
         <activity
@@ -109,7 +115,7 @@
         <activity android:name="network.particle.demo.ui.AuthDemoActivity" />
         <activity android:name="network.particle.demo.ui.ApiDemoActivity" />
         <activity android:name="network.particle.demo.ui.WalletDemoActivity" />
-        <activity android:name="network.particle.demo.ui.ParticleWalletLoginDemoActivity" />
+        <activity android:name="network.particle.demo.ui.ParticleWalletLoginDemoActivity" android:theme="@style/PnThemeWallet"/>
 
 
     </application>
