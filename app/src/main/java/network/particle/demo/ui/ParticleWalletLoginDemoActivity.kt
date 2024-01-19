@@ -15,9 +15,6 @@ import com.gyf.immersionbar.ImmersionBar
 import com.minijoy.demo.R
 import com.minijoy.demo.databinding.ActivityParticleWalletDemoBinding
 import com.particle.base.*
-import com.particle.base.EthereumChainId
-import com.particle.base.SolanaChainId
-import com.particle.base.data.WebServiceCallback
 import com.particle.base.model.ChainType
 import com.particle.base.model.LoginType
 import com.particle.base.model.MobileWCWallet

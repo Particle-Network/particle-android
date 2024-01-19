@@ -34,7 +34,7 @@ dependencyResolutionManagement {
         }
     }
 
-    enableFeaturePreview("VERSION_CATALOGS")
+//    enableFeaturePreview("VERSION_CATALOGS")
     versionCatalogs {
         create("libs")
         {

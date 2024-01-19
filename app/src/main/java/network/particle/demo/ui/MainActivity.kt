@@ -32,7 +32,7 @@ class MainActivity : DemoBaseActivity<ActivityMainBinding>(R.layout.activity_mai
             startActivity(Intent(this, ApiDemoActivity::class.java))
         }
         binding.btWalletDemo.setOnClickListener {
-            if (!ParticleNetwork.isWalletLogin()) {
+            if (!ParticleWallet.isWalletLogin()) {
                 startActivity(Intent(this, ParticleWalletLoginDemoActivity::class.java))
                 return@setOnClickListener
             }

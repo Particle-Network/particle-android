@@ -1,12 +1,9 @@
-import org.jetbrains.kotlin.konan.properties.Properties
-import java.io.FileInputStream
-
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
 }
-val sdkVersion = libs.versions.particle.network.version.get()
+val sdkVersion = libs.versions.connect.get()
 
 
 android {
@@ -63,6 +60,7 @@ android {
     dataBinding {
         isEnabled = true
     }
+    namespace = "com.minijoy.demo"
 }
 
 
@@ -77,7 +75,18 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
     implementation("network.particle:auth-service:$sdkVersion")
     implementation("network.particle:api-service:$sdkVersion")
+
+
+    implementation("network.particle:connect:$sdkVersion")
+    implementation("network.particle:connect-evm-adapter:$sdkVersion")
+    implementation("network.particle:connect-solana-adapter:$sdkVersion")
+    implementation("network.particle:connect-phantom-adapter:$sdkVersion")
+    implementation("network.particle:connect-wallet-connect-adapter:$sdkVersion")
+    implementation("network.particle:connect-auth-adapter:$sdkVersion")
+    implementation("network.particle:connect-auth-core-adapter:$sdkVersion")
+
     implementation("network.particle:wallet-service:$sdkVersion")
+
 
     //if you want to use biconomy service,please add this dependency
     implementation("network.particle:aa-service:$sdkVersion")

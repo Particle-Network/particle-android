@@ -7,12 +7,13 @@ import com.particle.base.*
 import com.particle.base.model.DAppMetadata
 import com.particle.connect.ParticleConnect
 import com.particle.erc4337.ParticleNetworkAA.initAAMode
-import com.particle.erc4337.aa.AAService
+import com.particle.erc4337.aa.BiconomyV2AAService
 import com.particle.gui.ParticleWallet
 import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
 import com.wallet.connect.adapter.*
 import network.particle.chains.ChainInfo
+import network.particle.chains.ChainInfo.Companion.PolygonMumbai
 import particle.auth.adapter.ParticleConnectAdapter
 
 object ParticleInitUtils {
@@ -67,10 +68,10 @@ object ParticleInitUtils {
         //enable AA-4337 mode
         ParticleNetwork.initAAMode(
             mapOf(
-                EthereumChainId.Mainnet.id to "your key",
+                PolygonMumbai.id to "your key",
             )
         )
-        ParticleNetwork.setAAService(AAService)
+        ParticleNetwork.setAAService(BiconomyV2AAService)
         ParticleNetwork.getAAService().enableAAMode()
     }
 }
