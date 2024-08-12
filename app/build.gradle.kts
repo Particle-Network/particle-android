@@ -3,16 +3,16 @@ plugins {
     kotlin("android")
     kotlin("kapt")
 }
-val sdkVersion = libs.versions.connect.get()
+val sdkVersion = "2.0.5"
 
 
 android {
 
-    compileSdk = libs.versions.compileSdkTiramisu.get().toInt()
+    compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
         applicationId = "network.particle.demos"
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdkTiramisu.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 5
         versionName = "$sdkVersion"
         vectorDrawables {
@@ -71,22 +71,21 @@ dependencies {
         module("org.bouncycastle:bcprov-jdk15to18") {
             replacedBy("org.bouncycastle:bcprov-jdk15on")
         }
+        module("org.bouncycastle:bcprov-jdk18on") {
+            replacedBy("org.bouncycastle:bcprov-jdk15on")
+        }
     }
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
-    implementation("network.particle:auth-service:$sdkVersion")
     implementation("network.particle:api-service:$sdkVersion")
-
-
     implementation("network.particle:connect:$sdkVersion")
+    implementation("network.particle:connect-kit:$sdkVersion")
     implementation("network.particle:connect-evm-adapter:$sdkVersion")
     implementation("network.particle:connect-solana-adapter:$sdkVersion")
     implementation("network.particle:connect-phantom-adapter:$sdkVersion")
     implementation("network.particle:connect-wallet-connect-adapter:$sdkVersion")
-    implementation("network.particle:connect-auth-adapter:$sdkVersion")
     implementation("network.particle:connect-auth-core-adapter:$sdkVersion")
 
     implementation("network.particle:wallet-service:$sdkVersion")
-
 
     //if you want to use biconomy service,please add this dependency
     implementation("network.particle:aa-service:$sdkVersion")
@@ -94,7 +93,6 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(libs.bundles.retrofit)
     implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.utilcodex)
     implementation(libs.refresh.layout)
@@ -104,6 +102,7 @@ dependencies {
     implementation(libs.coil.gif)
     implementation(libs.immersionbar)
     implementation(libs.bannerviewpager)
+
 
 }
 

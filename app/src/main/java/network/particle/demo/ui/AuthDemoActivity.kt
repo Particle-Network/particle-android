@@ -10,8 +10,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gyf.immersionbar.ImmersionBar
 import com.minijoy.demo.R
 import com.minijoy.demo.databinding.ActivityAuthDemoBinding
+import com.particle.auth.AuthCore
+import com.particle.auth.data.AuthCoreServiceCallback
+import com.particle.auth.data.AuthCoreSignCallback
+import com.particle.auth.data.SyncUserInfoStatus
 import com.particle.base.*
 import com.particle.base.data.ErrorInfo
+import com.particle.base.data.SignAllOutput
 import com.particle.base.data.SignOutput
 import com.particle.base.data.WebOutput
 import com.particle.base.data.WebServiceCallback
@@ -22,24 +27,8 @@ import com.particle.base.model.SupportAuthType
 import com.particle.base.model.UserInfo
 import com.particle.base.utils.Base58Utils
 import com.particle.base.utils.HexUtils
-import com.particle.network.ParticleNetworkAuth.fastLogout
-import com.particle.network.ParticleNetworkAuth.getAddress
-import com.particle.network.ParticleNetworkAuth.getUserInfo
-import com.particle.network.ParticleNetworkAuth.isLogin
-import com.particle.network.ParticleNetworkAuth.isLoginAsync
-import com.particle.network.ParticleNetworkAuth.login
-import com.particle.network.ParticleNetworkAuth.logout
-import com.particle.network.ParticleNetworkAuth.openAccountAndSecurity
-import com.particle.network.ParticleNetworkAuth.openWebWallet
-import com.particle.network.ParticleNetworkAuth.signAllTransactions
-import com.particle.network.ParticleNetworkAuth.signAndSendTransaction
-import com.particle.network.ParticleNetworkAuth.signMessage
-import com.particle.network.ParticleNetworkAuth.signTransaction
-import com.particle.network.ParticleNetworkAuth.signTypedData
-import com.particle.network.ParticleNetworkAuth.switchChain
-import com.particle.network.SignTypedDataVersion
-import com.particle.network.service.*
-import com.particle.network.service.model.*
+import com.particle.mpc.data.ServerException
+
 import kotlinx.coroutines.launch
 import network.particle.chains.ChainInfo
 import network.particle.demo.ui.adapter.ChainInfoChoiceListAdapter
@@ -66,7 +55,10 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
         binding.selectChain.setOnClickListener {
             val chainInfos = DemoChainUtils.getAllChainInfo()
             MaterialAlertDialogBuilder(this@AuthDemoActivity).setTitle(getString(R.string.pn_select_chain))
-                .setSingleChoiceItems(ChainInfoChoiceListAdapter(this@AuthDemoActivity, chainInfos), 0) { dialog, which ->
+                .setSingleChoiceItems(
+                    ChainInfoChoiceListAdapter(this@AuthDemoActivity, chainInfos),
+                    0
+                ) { dialog, which ->
                     val chainInfo = chainInfos[which]
                     currChainInfo = chainInfo
                     ParticleNetwork.setChainInfo(currChainInfo!!)  //set chain info
@@ -81,11 +73,9 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
         }
         binding.login.setOnClickListener {
             val supportAuthTypeAll = SupportAuthType.ALL.value
-            //if you want to use google or facebook login, you can set the authType to SupportAuthType.GOOGLE.value or SupportAuthType.FACEBOOK.value
-            val supportAuthType2 = SupportAuthType.GOOGLE.value or SupportAuthType.FACEBOOK.value
-            ParticleNetwork.login(
-                LoginType.EMAIL,"",supportAuthTypeAll,
-                loginCallback = object : WebServiceCallback<UserInfo> {
+            AuthCore.connect(
+                LoginType.EMAIL,
+                loginCallback = object : AuthCoreServiceCallback<UserInfo> {
                     override fun success(output: UserInfo) {
                         updateAddress()
                     }
@@ -96,54 +86,55 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
                 })
         }
 
-        binding.openWebWallet.setOnClickListener {
-            ParticleNetwork.openWebWallet(this@AuthDemoActivity)
-        }
+
 
         binding.isLogin.setOnClickListener {
-            showMessageDialog(getString(R.string.pn_is_login), ParticleNetwork.isLogin().toString())
+            showMessageDialog(getString(R.string.pn_is_login), AuthCore.isConnected().toString())
         }
 
         binding.isLoginAsync.setOnClickListener {
             lifecycleScope.launch {
-                val userInfo: UserInfo? = ParticleNetwork.isLoginAsync()
-                showMessageDialog(getString(R.string.pn_is_login_async), GsonUtils.toJson(userInfo))
+                try {
+                    val userInfo: SyncUserInfoStatus = AuthCore.syncUserInfo()
+                    showMessageDialog(
+                        getString(R.string.pn_is_login_async),
+                        GsonUtils.toJson(userInfo)
+                    )
+                } catch (e: ServerException) {
+                    showMessageDialog(getString(R.string.pn_is_login_async), "User Token Expired")
+                }
+
             }
         }
 
         binding.getAddress.setOnClickListener {
-            val address = ParticleNetwork.getAddress()
-            showMessageDialog(getString(R.string.pn_get_address), address)
+            val address = if (ParticleNetwork.chainInfo.isEvmChain()) {
+                AuthCore.evm.getAddress()
+            } else {
+                AuthCore.solana.getAddress()
+            }
+            showMessageDialog(getString(R.string.pn_get_address), address ?: "")
         }
 
         binding.getUserInfo.setOnClickListener {
-            val userInfo: UserInfo? = ParticleNetwork.getUserInfo()
+            val userInfo: UserInfo? = AuthCore.getUserInfo()
             showMessageDialog(getString(R.string.pn_get_userinfo), GsonUtils.toJson(userInfo))
         }
 
         binding.logout.setOnClickListener {
-            ParticleNetwork.logout(object : WebServiceCallback<WebOutput> {
-                override fun success(output: WebOutput) {
-                    currChainInfo = null
-                    ToastUtils.showLong(getString(R.string.pn_logout_success))
-                }
+            AuthCore.disconnect(object : ResultCallback {
 
-                override fun failure(errMsg: ErrorInfo) {
-                    ToastUtils.showLong(errMsg.message)
-                }
-            })
-        }
-
-        binding.fastLogout.setOnClickListener {
-            ParticleNetwork.fastLogout(object : ResultCallback {
                 override fun failure() {
+                    ToastUtils.showLong("logout failure")
                 }
 
                 override fun success() {
+                    ToastUtils.showLong(getString(R.string.pn_logout_success))
                 }
-
             })
         }
+
+
 
         binding.signMessage.setOnClickListener {
             if (checkCurrChainInfo()) return@setOnClickListener
@@ -154,15 +145,38 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
             } else {
                 Base58Utils.encode(message.toByteArray(Charsets.UTF_8))
             }
-            ParticleNetwork.signMessage(encodeMessage, object : WebServiceCallback<SignOutput> {
-                override fun success(output: SignOutput) {
-                    showMessageDialog(getString(R.string.pn_sign_message), output.signature!!)
-                }
+            if (ParticleNetwork.chainInfo.isEvmChain()) {
+                AuthCore.evm.personalSign(encodeMessage, object : AuthCoreSignCallback<SignOutput> {
+                    override fun success(output: SignOutput) {
+                        showMessageDialog(getString(R.string.pn_sign_message), output.signature!!)
+                    }
 
-                override fun failure(errMsg: ErrorInfo) {
-                    showMessageDialog(getString(R.string.pn_sign_message), "code:${errMsg.code} \nmessage:${errMsg.message}")
-                }
-            })
+                    override fun failure(errMsg: ErrorInfo) {
+                        showMessageDialog(
+                            getString(R.string.pn_sign_message),
+                            "code:${errMsg.code} \nmessage:${errMsg.message}"
+                        )
+                    }
+                })
+            } else {
+                AuthCore.solana.signMessage(
+                    encodeMessage,
+                    object : AuthCoreSignCallback<SignOutput> {
+                        override fun success(output: SignOutput) {
+                            showMessageDialog(
+                                getString(R.string.pn_sign_message),
+                                output.signature!!
+                            )
+                        }
+
+                        override fun failure(errMsg: ErrorInfo) {
+                            showMessageDialog(
+                                getString(R.string.pn_sign_message),
+                                "code:${errMsg.code} \nmessage:${errMsg.message}"
+                            )
+                        }
+                    })
+            }
         }
 
         binding.signTransaction.setOnClickListener {
@@ -175,15 +189,25 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
             lifecycleScope.launch {
                 val transaction = TransactionMock.mockSolanaTransaction()
                 LogUtils.d("signTransaction", transaction)
-                ParticleNetwork.signTransaction(transaction, object : WebServiceCallback<SignOutput> {
-                    override fun success(output: SignOutput) {
-                        showMessageDialog(getString(R.string.pn_sign_transaction), output.signature!!)
-                    }
+                if (ParticleNetwork.chainInfo.isSolanaChain()) {
+                    AuthCore.solana.signTransaction(
+                        transaction,
+                        object : AuthCoreSignCallback<SignOutput> {
+                            override fun success(output: SignOutput) {
+                                showMessageDialog(
+                                    getString(R.string.pn_sign_transaction),
+                                    output.signature!!
+                                )
+                            }
 
-                    override fun failure(errMsg: ErrorInfo) {
-                        showMessageDialog(getString(R.string.pn_sign_transaction), "code:${errMsg.code} \nmessage:${errMsg.message}")
-                    }
-                })
+                            override fun failure(errMsg: ErrorInfo) {
+                                showMessageDialog(
+                                    getString(R.string.pn_sign_transaction),
+                                    "code:${errMsg.code} \nmessage:${errMsg.message}"
+                                )
+                            }
+                        })
+                }
             }
 
         }
@@ -198,15 +222,25 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
             lifecycleScope.launch {
                 val transactions1 = TransactionMock.mockSolanaTransaction()
                 val transactions2 = TransactionMock.mockSolanaTransaction()
-                ParticleNetwork.signAllTransactions(listOf(transactions1, transactions2), object : WebServiceCallback<SignOutput> {
-                    override fun success(output: SignOutput) {
-                        showMessageDialog(getString(R.string.pn_sign_all_transactions), output.signature!!)
-                    }
+                AuthCore.solana.signAllTransactions(
+                    listOf(transactions1, transactions2),
+                    object : AuthCoreSignCallback<SignAllOutput> {
 
-                    override fun failure(errMsg: ErrorInfo) {
-                        showMessageDialog(getString(R.string.pn_sign_all_transactions), "code:${errMsg.code} \nmessage:${errMsg.message}")
-                    }
-                })
+
+                        override fun failure(errMsg: ErrorInfo) {
+                            showMessageDialog(
+                                getString(R.string.pn_sign_all_transactions),
+                                "code:${errMsg.code} \nmessage:${errMsg.message}"
+                            )
+                        }
+
+                        override fun success(output: SignAllOutput) {
+                            showMessageDialog(
+                                getString(R.string.pn_sign_all_transactions),
+                                output.signatures.toString()
+                            )
+                        }
+                    })
             }
 
         }
@@ -222,15 +256,43 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
                     //or you can use TransactionMock.mockEvmSendNativeTransactionCustom()
                 }
                 LogUtils.d("signSendTransaction", transaction)
-                ParticleNetwork.signAndSendTransaction(transaction, object : WebServiceCallback<SignOutput> {
-                    override fun success(output: SignOutput) {
-                        showMessageDialog(getString(R.string.pn_sign_send_transaction), output.signature!!)
-                    }
+                if (ParticleNetwork.chainInfo.isEvmChain()) {
+                    AuthCore.evm.sendTransaction(
+                        transaction,
+                        object : AuthCoreSignCallback<SignOutput> {
+                            override fun success(output: SignOutput) {
+                                showMessageDialog(
+                                    getString(R.string.pn_sign_send_transaction),
+                                    output.signature!!
+                                )
+                            }
 
-                    override fun failure(errMsg: ErrorInfo) {
-                        showMessageDialog(getString(R.string.pn_sign_send_transaction), "code:${errMsg.code} \nmessage:${errMsg.message}")
-                    }
-                })
+                            override fun failure(errMsg: ErrorInfo) {
+                                showMessageDialog(
+                                    getString(R.string.pn_sign_send_transaction),
+                                    "code:${errMsg.code} \nmessage:${errMsg.message}"
+                                )
+                            }
+                        })
+                } else {
+                    AuthCore.solana.signAndSendTransaction(
+                        transaction,
+                        object : AuthCoreSignCallback<SignOutput> {
+                            override fun success(output: SignOutput) {
+                                showMessageDialog(
+                                    getString(R.string.pn_sign_send_transaction),
+                                    output.signature!!
+                                )
+                            }
+
+                            override fun failure(errMsg: ErrorInfo) {
+                                showMessageDialog(
+                                    getString(R.string.pn_sign_send_transaction),
+                                    "code:${errMsg.code} \nmessage:${errMsg.message}"
+                                )
+                            }
+                        })
+                }
             }
 
         }
@@ -244,20 +306,23 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
             }
             val message = StreamUtils.getRawString(resources, R.raw.typed_data)
             val hexMessage = HexUtils.encodeWithPrefix(message.toByteArray(Charsets.UTF_8))
-            ParticleNetwork.signTypedData(hexMessage, SignTypedDataVersion.V4, object : WebServiceCallback<SignOutput> {
+            AuthCore.evm.signTypedData(hexMessage, object : AuthCoreSignCallback<SignOutput> {
                 override fun success(output: SignOutput) {
                     showMessageDialog(getString(R.string.pn_sign_typed_data), output.signature!!)
                 }
 
                 override fun failure(errMsg: ErrorInfo) {
-                    showMessageDialog(getString(R.string.pn_sign_typed_data), "code:${errMsg.code} \nmessage:${errMsg.message}")
+                    showMessageDialog(
+                        getString(R.string.pn_sign_typed_data),
+                        "code:${errMsg.code} \nmessage:${errMsg.message}"
+                    )
                 }
             })
         }
 
         // If you login to solana, you do not have an evm wallet address, you need to call this method to switch to the evm chain, this method will create an evm wallet
         binding.setChainInfoSync.setOnClickListener {
-            ParticleNetwork.switchChain(ChainInfo.EthereumGoerli, object : ResultCallback {
+            AuthCore.switchChain(ChainInfo.EthereumSepolia, object : ResultCallback {
                 override fun success() {
                     showMessageDialog(getString(R.string.pn_set_chaininfo_sync), "success")
                 }
@@ -275,24 +340,28 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
         }
 
         binding.openAccountSecurity.setOnClickListener {
-            ParticleNetwork.openAccountAndSecurity(object : WebServiceCallback<WebOutput> {
-                override fun success(output: WebOutput) {
+            AuthCore.openAccountAndSecurity(this@AuthDemoActivity,
+                object : WebServiceCallback<WebOutput> {
+                    override fun success(output: WebOutput) {
 
-                }
-
-                override fun failure(errMsg: ErrorInfo) {
-                    if (errMsg.code == 10005 || errMsg.code == 8005) {
-                        //You've been knocked out.
                     }
-                }
-            })
+
+                    override fun failure(errMsg: ErrorInfo) {
+                        if (errMsg.code == 10005 || errMsg.code == 8005) {
+                            //You've been knocked out.
+                        }
+                    }
+                })
         }
 
         binding.setSecurityAccountConfig.setOnClickListener {
             //0-> Do not prompt
             //1-> prompt once
             //2-> prompt every time
-            val config = SecurityAccountConfig(promptSettingWhenSign = 1, promptMasterPasswordSettingWhenLogin = 0)
+            val config = SecurityAccountConfig(
+                promptSettingWhenSign = 1,
+                promptMasterPasswordSettingWhenLogin = 0
+            )
             ParticleNetwork.setSecurityAccountConfig(config)
         }
 
@@ -313,7 +382,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
     }
 
     private fun checkIsLogin(): Boolean {
-        if (!ParticleNetwork.isLogin()) {
+        if (!AuthCore.isConnected()) {
             ToastUtils.showLong(R.string.pn_not_login)
             return true
         }
@@ -321,8 +390,12 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
     }
 
     fun updateAddress() {
-        if (ParticleNetwork.isLogin()) {
-            binding.address.text = ParticleNetwork.getAddress()
+        if (AuthCore.isConnected()) {
+            binding.address.text = if (ParticleNetwork.chainInfo.isEvmChain()) {
+                AuthCore.evm.getAddress()
+            } else {
+                AuthCore.solana.getAddress()
+            }
             binding.address.visibility = View.VISIBLE
         }
     }

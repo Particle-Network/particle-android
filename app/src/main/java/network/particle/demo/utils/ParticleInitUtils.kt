@@ -2,6 +2,7 @@ package network.particle.demo.utils
 
 import android.app.Application
 import android.content.Context
+import auth.core.adapter.AuthCoreAdapter
 import com.evm.adapter.EVMConnectAdapter
 import com.particle.base.*
 import com.particle.base.model.DAppMetadata
@@ -13,8 +14,6 @@ import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
 import com.wallet.connect.adapter.*
 import network.particle.chains.ChainInfo
-import network.particle.chains.ChainInfo.Companion.PolygonMumbai
-import particle.auth.adapter.ParticleConnectAdapter
 
 object ParticleInitUtils {
 
@@ -35,14 +34,14 @@ object ParticleInitUtils {
             app, Env.PRODUCTION, chainInfo, dAppMetadata
         ) {
             listOf(
-                ParticleConnectAdapter(),
+                AuthCoreAdapter(),
                 MetaMaskConnectAdapter(),
                 RainbowConnectAdapter(),
                 TrustConnectAdapter(),
                 PhantomConnectAdapter(),
                 WalletConnectAdapter(),
                 ImTokenConnectAdapter(),
-                BitKeepConnectAdapter(),
+                BitGetConnectAdapter(),
                 EVMConnectAdapter("https://api-debug.particle.network/evm-chain/rpc/"),//"https://api-debug.particle.network/evm-chain/rpc/"
                 SolanaConnectAdapter("https://api-debug.particle.network/solana/rpc/"),//"https://api-debug.particle.network/solana/rpc/"
             )
@@ -68,10 +67,10 @@ object ParticleInitUtils {
         //enable AA-4337 mode
         ParticleNetwork.initAAMode(
             mapOf(
-                PolygonMumbai.id to "your key",
+                ChainInfo.PolygonAmoy.id to "your key",
             )
         )
-        ParticleNetwork.setAAService(BiconomyV2AAService)
-        ParticleNetwork.getAAService().enableAAMode()
+//        ParticleNetwork.setAAService(BiconomyV2AAService)
+//        ParticleNetwork.getAAService().enableAAMode()
     }
 }

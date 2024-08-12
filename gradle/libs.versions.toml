@@ -1,0 +1,31 @@
+[versions]
+bannerviewpager = "3.5.6"
+minSdk = "23"
+compileSdk = "34"
+targetSdk = "34"
+
+
+retrofit = "2.11.0"
+
+[libraries]
+#official
+bannerviewpager = { module = "com.github.zhpanvip:bannerviewpager", version.ref = "bannerviewpager" }
+appcompat = "androidx.appcompat:appcompat:1.7.0"
+material = "com.google.android.material:material:1.12.0"
+
+okhttp3-logging-interceptor = "com.squareup.okhttp3:logging-interceptor:4.12.0"
+
+
+coil = "io.coil-kt:coil:2.6.0"
+coil-svg = "io.coil-kt:coil-svg:2.4.0"
+coil-gif = "io.coil-kt:coil-gif:2.4.0"
+
+
+refresh-layout = "io.github.scwang90:refresh-layout-kernel:2.0.5"
+
+utilcodex = "com.github.xxhong:CollectsPkg:2.1.0"
+
+
+immersionbar = "com.geyifeng.immersionbar:immersionbar:3.2.2"
+
+

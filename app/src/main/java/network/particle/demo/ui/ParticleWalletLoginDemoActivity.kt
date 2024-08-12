@@ -1,44 +1,31 @@
 package network.particle.demo.ui
 
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Color
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
-import com.connect.common.ConnectCallback
+import com.blankj.utilcode.util.LogUtils
+import com.connect.common.ConnectKitCallback
 import com.connect.common.model.Account
 import com.connect.common.model.ConnectError
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ImmersionBar
 import com.minijoy.demo.R
 import com.minijoy.demo.databinding.ActivityParticleWalletDemoBinding
-import com.particle.base.*
-import com.particle.base.model.ChainType
-import com.particle.base.model.LoginType
-import com.particle.base.model.MobileWCWallet
-import com.particle.base.model.MobileWCWalletName
-import com.particle.base.model.SupportAuthType
-import com.particle.base.model.WalletName
-import com.particle.connect.ParticleConnect
+import com.particle.connectkit.AdditionalLayoutOptions
+import com.particle.connectkit.ConnectKitConfig
+import com.particle.connectkit.ConnectOption
+import com.particle.connectkit.EnableSocialProvider
+import com.particle.connectkit.EnableWallet
+import com.particle.connectkit.EnableWalletLabel
+import com.particle.connectkit.EnableWalletProvider
+import com.particle.connectkit.ParticleConnectKit
 import com.particle.gui.ParticleWallet
 import network.particle.demo.ui.adapter.BannerAdapter
-import com.particle.gui.router.PNRouter
-import com.particle.gui.ui.login.LoginTypeCallBack
-import com.particle.gui.ui.setting.manage_wallet.dialog.WallectConnectTabCallback
-import com.particle.gui.ui.setting.manage_wallet.dialog.WalletConnectTabFragment
-import com.particle.gui.ui.setting.manage_wallet.private_login.PrivateKeyLoginActivity
-import com.particle.gui.utils.WalletUtils
-import com.particle.network.ParticleNetworkAuth.getAddress
-import com.particle.network.ParticleNetworkAuth.login
 import com.zhpan.bannerview.constants.IndicatorGravity
 import com.zhpan.indicator.enums.IndicatorSlideMode
 import com.zhpan.indicator.enums.IndicatorStyle
 import kotlinx.coroutines.launch
-import network.particle.chains.ChainInfo
 import network.particle.demo.ui.base.DemoBaseActivity
-import particle.auth.adapter.ParticleConnectConfig
 
 
 class ParticleWalletLoginDemoActivity :
@@ -57,101 +44,57 @@ class ParticleWalletLoginDemoActivity :
         setObserver()
     }
 
-    lateinit var launcherResult: ActivityResultLauncher<Intent>
     override fun setListeners() {
         super.setListeners()
-        binding.rlLoginEmail.setOnClickListener {
-//            loginWithPn(LoginType.EMAIL)
-            ParticleConnect.setChain(ChainInfo.Ethereum)
-            val qrFragment = WalletConnectTabFragment()
-            qrFragment.setConnectCallback(object : WallectConnectTabCallback {
-                override fun onConnect(account: Account, wallectName: String) {
-                    qrFragment.dismissAllowingStateLoss()
+        binding.rlLoginWithConnectKit.setOnClickListener {
+            val config = ConnectKitConfig(
+                logo = "",
+                connectOptions = listOf(
+                    ConnectOption.EMAIL,
+                    ConnectOption.PHONE,
+                    ConnectOption.SOCIAL,
+                    ConnectOption.WALLET),
+                socialProviders = listOf(
+                    EnableSocialProvider.GOOGLE,
+                    EnableSocialProvider.APPLE,
+                    EnableSocialProvider.DISCORD,
+                    EnableSocialProvider.TWITTER,
+                    EnableSocialProvider.FACEBOOK,
+                    EnableSocialProvider.GITHUB,
+                    EnableSocialProvider.MICROSOFT,
+                    EnableSocialProvider.TWITCH,
+                    EnableSocialProvider.LINKEDIN),
+                walletProviders = listOf(
+                    EnableWalletProvider(EnableWallet.MetaMask, EnableWalletLabel.RECOMMENDED),
+                    EnableWalletProvider(EnableWallet.OKX),
+                    EnableWalletProvider(EnableWallet.Phantom),
+                    EnableWalletProvider(EnableWallet.Trust),
+                    EnableWalletProvider(EnableWallet.Bitget),
+                    EnableWalletProvider(EnableWallet.WalletConnect),
+                ),
+                additionalLayoutOptions = AdditionalLayoutOptions(
+                    isCollapseWalletList = false,
+                    isSplitEmailAndSocial = false,
+                    isSplitEmailAndPhone = false,
+                    isHideContinueButton = false
+                )
+            )
+            ParticleConnectKit.connect(config,connectCallback = object : ConnectKitCallback {
+                override fun onConnected(walletName: String, account: Account) {
+                    LogUtils.d("onConnected: $walletName, $account")
                     lifecycleScope.launch {
-                        val wallet =
-                            WalletUtils.createSelectedWallet(account.publicAddress, wallectName)
-                        ParticleWallet.setWallet(wallet)
+                        ParticleWallet.setWallet(account.publicAddress,walletName)
                         openWallet()
                     }
                 }
 
-                override fun onConnectError(error: ConnectError) {
-                    qrFragment.dismissAllowingStateLoss()
-                }
-            })
-            qrFragment.show(supportFragmentManager, "WalletConnectTabFragment")
-        }
-        binding.rlLoginMetaMask.setOnClickListener {
-            connectEvmWallet(MobileWCWallet.MetaMask)
-        }
-        binding.ivGoogle.setOnClickListener {
-            loginWithPn(LoginType.GOOGLE)
-        }
-        binding.ivFacebook.setOnClickListener {
-            loginWithPn(LoginType.FACEBOOK)
-        }
-        binding.ivApple.setOnClickListener {
-            loginWithPn(LoginType.APPLE)
-        }
-//        binding.ivTwitter.setOnClickListener {
-//            loginWithPn(LoginType.TWITTER)
-//        }
-        binding.ivOther.setOnClickListener {
-            PNRouter.navigatorLoginList(supportFragmentManager, object : LoginTypeCallBack {
-                override fun onLoginType(loginType: LoginType) {
-                    loginWithPn(loginType)
+                override fun onError(error: ConnectError) {
                 }
 
-                override fun onLoginConnect(walletName: WalletName) {
-                    when (walletName) {
-                        MobileWCWalletName.MetaMask.name -> {
-                            connectEvmWallet(MobileWCWallet.MetaMask)
-                        }
-
-                        MobileWCWalletName.Rainbow.name -> {
-                            connectEvmWallet(MobileWCWallet.Rainbow)
-                        }
-
-                        MobileWCWalletName.Trust.name -> {
-                            connectEvmWallet(MobileWCWallet.Trust)
-                        }
-
-                        MobileWCWalletName.ImToken.name -> {
-                            connectEvmWallet(MobileWCWallet.ImToken)
-                        }
-
-                        MobileWCWalletName.BitKeep.name -> {
-                            connectEvmWallet(MobileWCWallet.BitKeep)
-                        }
-
-                        MobileWCWalletName.WalletConnect.name -> {
-                            walletConnect()
-                        }
-
-                        MobileWCWalletName.Phantom.name -> {
-                            connectPhantom()
-                        }
-
-                        MobileWCWalletName.SolanaConnect.name -> {
-                            val intent =
-                                PrivateKeyLoginActivity.newIntent(this@ParticleWalletLoginDemoActivity)
-                            launcherResult.launch(intent)
-                        }
-
-                        MobileWCWalletName.EVMConnect.name -> {
-                            val intent =
-                                PrivateKeyLoginActivity.newIntent(this@ParticleWalletLoginDemoActivity)
-                            launcherResult.launch(intent)
-                        }
-
-                        else -> {
-
-                        }
-                    }
-                }
-
-            })
+            });
         }
+
+
     }
 
 
@@ -174,95 +117,6 @@ class ParticleWalletLoginDemoActivity :
             )
         )
 
-    }
-
-    private fun loginWithPn(
-        loginType: LoginType, supportAuthType: SupportAuthType = SupportAuthType.ALL
-    ) {
-        val pnAdapter =
-            ParticleConnect.getAdapters().first { it.name == MobileWCWalletName.Particle.name }
-        val config = ParticleConnectConfig(loginType = loginType)
-
-        pnAdapter.connect(config, object : ConnectCallback {
-            override fun onConnected(account: Account) {
-                lifecycleScope.launch {
-                    val wallet = WalletUtils.createSelectedWallet(account.publicAddress, pnAdapter)
-                    ParticleWallet.setWallet(wallet)
-                    openWallet()
-                }
-            }
-
-            override fun onError(error: ConnectError) {
-            }
-        })
-
-    }
-
-
-    private fun connectEvmWallet(mobileWallet: MobileWCWallet) {
-        ParticleConnect.setChain(ChainInfo.Ethereum)
-        val adapter =
-            ParticleConnect.getAdapters(ChainType.EVM).first { it.name == mobileWallet.name }
-        adapter.connect(null, object : ConnectCallback {
-            override fun onConnected(account: Account) {
-                lifecycleScope.launch {
-                    val wallet = WalletUtils.createSelectedWallet(account.publicAddress, adapter)
-                    ParticleWallet.setWallet(wallet)
-                    openWallet()
-                }
-            }
-
-            override fun onError(error: ConnectError) {
-            }
-        })
-    }
-
-    private fun walletConnect() {
-        ParticleConnect.setChain(ChainInfo.Ethereum)
-        val qrFragment = WalletConnectTabFragment()
-        qrFragment.setConnectCallback(object : WallectConnectTabCallback {
-            override fun onConnect(account: Account, wallectName: String) {
-                qrFragment.dismissAllowingStateLoss()
-                lifecycleScope.launch {
-                    val wallet =
-                        WalletUtils.createSelectedWallet(account.publicAddress, wallectName)
-                    ParticleWallet.setWallet(wallet)
-                    openWallet()
-                }
-            }
-
-            override fun onConnectError(error: ConnectError) {
-                qrFragment.dismissAllowingStateLoss()
-            }
-        })
-        qrFragment.show(supportFragmentManager, "WalletConnectTabFragment")
-    }
-
-    private fun connectPhantom() {
-        ParticleConnect.setChain(ChainInfo.Solana)
-        val adapter = ParticleConnect.getAdapters(ChainType.Solana).first { it.name == "Phantom" }
-        adapter.connect(null, object : ConnectCallback {
-            override fun onConnected(account: Account) {
-                lifecycleScope.launch {
-                    val wallet = WalletUtils.createSelectedWallet(account.publicAddress, adapter)
-                    ParticleWallet.setWallet(wallet)
-                    openWallet()
-                }
-            }
-
-            override fun onError(error: ConnectError) {
-            }
-        })
-    }
-
-
-    override fun setObserver() {
-        launcherResult =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-                if (activityResult.resultCode == Activity.RESULT_OK) {
-                    openWallet()
-                }
-            }
     }
 
     private fun openWallet() {

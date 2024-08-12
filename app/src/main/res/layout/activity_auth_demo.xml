@@ -105,12 +105,7 @@
                         android:layout_marginTop="10dp"
                         android:text="@string/pn_login" />
 
-                    <Button
-                        android:id="@+id/openWebWallet"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/pn_open_web_wallet" />
+
 
                     <Button
                         android:id="@+id/isLogin"
@@ -147,12 +142,6 @@
                         android:layout_marginTop="10dp"
                         android:text="@string/pn_logout" />
 
-                    <Button
-                        android:id="@+id/fastLogout"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/pn_fast_logout" />
 
                     <Button
                         android:id="@+id/signMessage"

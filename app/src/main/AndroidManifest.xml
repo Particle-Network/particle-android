@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Particleandroid"
         android:usesCleartextTraffic="true"
-        tools:replace="android:label,android:fullBackupContent"
+        tools:replace="android:label,android:fullBackupContent,android:theme"
         >
 
 
@@ -72,15 +72,26 @@
             android:value="${PN_APP_ID}" />
         <!--   Particle Network config end     -->
 
+        <!-- Particle Connect Redirect Callback -->
+        <!-- Particle AuthCore Start -->
         <activity
-            android:name="com.particle.network.controller.AuthActivity"
-            android:exported="false"
+            android:name="com.particle.auth.controller.AuthCoreWebActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
+            android:launchMode="singleTask"
             android:theme="@style/ThemeAuthWeb">
             <intent-filter>
-                <action android:name="network.particle.action.auth" />
+                <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="ac${PN_APP_ID}" />
             </intent-filter>
         </activity>
+        <!-- Particle AuthCore End -->
+
 
         <!-- Particle Connect Redirect Callback -->
         <activity

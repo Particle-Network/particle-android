@@ -40,38 +40,23 @@
         <com.zhpan.bannerview.BannerViewPager
             android:id="@+id/bannerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="400dp"
             android:layout_marginVertical="10dp"
-            android:layout_centerVertical="true"
-            app:layout_constraintBottom_toTopOf="@+id/rlLoginEmail"
             app:layout_constraintTop_toBottomOf="@+id/tvSubTitle"
-            app:layout_constraintVertical_bias="0.40999998"
             tools:background="@color/white" />
 
-
         <RelativeLayout
-            android:layout_marginBottom="25dp"
-            android:id="@+id/rlLoginEmail"
+            android:id="@+id/rlLoginWithConnectKit"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:layout_marginStart="37dp"
             android:layout_marginEnd="37dp"
             android:background="@drawable/bg_login_item_selector"
-            app:layout_constraintBottom_toTopOf="@+id/rlLoginMetaMask"
+            app:layout_constraintBottom_toTopOf="@+id/imageView2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bannerView">
 
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/pn_ic_email" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,86 +68,7 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rlLoginMetaMask"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginStart="37dp"
-            android:layout_marginEnd="37dp"
-            android:background="@drawable/bg_login_item_selector"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="25dp"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/pn_ic_metamask" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/pn_login_metamask"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_marginBottom="50dp"
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="37dp"
-            android:layout_marginEnd="37dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/imageView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <ImageView
-                android:id="@+id/ivGoogle"
-                android:layout_width="43dp"
-                android:layout_height="43dp"
-                android:layout_weight="1"
-                android:src="@drawable/pn_ic_cgoogle" />
-
-            <ImageView
-                android:id="@+id/ivFacebook"
-                android:layout_width="43dp"
-                android:layout_height="43dp"
-                android:layout_weight="1"
-                android:src="@drawable/pn_ic_cfacebook" />
-
-            <ImageView
-                android:id="@+id/ivApple"
-                android:layout_width="43dp"
-                android:layout_height="43dp"
-                android:layout_weight="1"
-                android:src="@drawable/pn_ic_capple" />
-
-            <ImageView
-                android:id="@+id/ivTwitter"
-                android:layout_width="43dp"
-                android:layout_height="43dp"
-                android:layout_weight="1"
-                android:src="@drawable/pn_ic_ctwitter"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/ivOther"
-                android:layout_width="43dp"
-                android:layout_height="43dp"
-                android:layout_weight="1"
-                android:src="@drawable/pn_ic_other" />
-        </LinearLayout>
 
         <ImageView
             android:id="@+id/imageView2"

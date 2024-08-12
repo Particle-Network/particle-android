@@ -5,6 +5,7 @@ import com.particle.api.infrastructure.net.data.EvmReqBodyMethod
 import com.particle.api.infrastructure.net.data.SerializeSOLTransReq
 import com.particle.api.service.EvmService
 import com.particle.api.solana
+import com.particle.auth.AuthCore
 import com.particle.base.ParticleNetwork
 import com.particle.base.model.FeeMarketEIP1559TxData
 import com.particle.base.model.ITxData
@@ -12,7 +13,6 @@ import com.particle.base.model.TxAction
 import com.particle.base.model.TxData
 import com.particle.base.utils.gweiToHexStr
 import com.particle.base.utils.toHexStr
-import com.particle.network.ParticleNetworkAuth.getAddress
 import okhttp3.internal.toHexString
 import org.json.JSONObject
 
@@ -20,7 +20,7 @@ object TransactionMock {
 
     suspend fun mockSolanaTransaction(): String {
         val req = SerializeSOLTransReq(
-            ParticleNetwork.getAddress(),
+            AuthCore.solana.getAddress()!!,
             TestAccount.solana().receiverAddress,
             TestAccount.solana().amount
         )
@@ -31,14 +31,14 @@ object TransactionMock {
     }
 
     suspend fun mockEvmSendNativeTransactionFast(): String {
-        val from: String = ParticleNetwork.getAddress()
+        val from: String = AuthCore.evm.getAddress()!!
         val to = TestAccount.evm().receiverAddress
         val amount = TestAccount.evm().amount.toHexString()
         return ParticleNetwork.evm.createTransaction(from, to, "0x$amount")!!.serialize()
     }
 
     suspend fun mockEvmSendNativeTransactionCustom(): String {
-        val from: String = ParticleNetwork.getAddress()
+        val from: String = AuthCore.evm.getAddress()!!
         val to = TestAccount.evm().receiverAddress
         val amount = TestAccount.evm().amount.toHexString()
         val gasLimit = getEvmTransGasLimit(from, to)
@@ -60,7 +60,7 @@ object TransactionMock {
         } else {
             transaction = TxData(
                 chainId = ParticleNetwork.chainId.toString().toHexStr(),
-                from = ParticleNetwork.getAddress(),
+                from =  AuthCore.evm.getAddress()!!,
                 to = to,
                 value = "0x$amount",
                 data = "0x",
