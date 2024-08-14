@@ -42,8 +42,8 @@ object ParticleInitUtils {
                 WalletConnectAdapter(),
                 ImTokenConnectAdapter(),
                 BitGetConnectAdapter(),
-                EVMConnectAdapter("https://api-debug.particle.network/evm-chain/rpc/"),//"https://api-debug.particle.network/evm-chain/rpc/"
-                SolanaConnectAdapter("https://api-debug.particle.network/solana/rpc/"),//"https://api-debug.particle.network/solana/rpc/"
+                EVMConnectAdapter(),
+                SolanaConnectAdapter(),
             )
         }
     }
@@ -65,11 +65,7 @@ object ParticleInitUtils {
         }
         ParticleNetwork.setLanguage(LanguageEnum.EN)
         //enable AA-4337 mode
-        ParticleNetwork.initAAMode(
-            mapOf(
-                ChainInfo.PolygonAmoy.id to "your key",
-            )
-        )
+        ParticleNetwork.initAAMode()
 //        ParticleNetwork.setAAService(BiconomyV2AAService)
 //        ParticleNetwork.getAAService().enableAAMode()
     }

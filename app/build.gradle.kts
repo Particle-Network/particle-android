@@ -3,7 +3,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
 }
-val sdkVersion = "2.0.5"
+val sdkVersion = "2.0.9"
 
 
 android {
@@ -44,11 +44,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_11)
-        targetCompatibility(JavaVersion.VERSION_11)
+        sourceCompatibility(JavaVersion.VERSION_17)
+        targetCompatibility(JavaVersion.VERSION_17)
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     packagingOptions {
@@ -76,7 +76,7 @@ dependencies {
         }
     }
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
-    implementation("network.particle:api-service:$sdkVersion")
+    val sdkVersion = "2.0.7"
     implementation("network.particle:connect:$sdkVersion")
     implementation("network.particle:connect-kit:$sdkVersion")
     implementation("network.particle:connect-evm-adapter:$sdkVersion")
@@ -84,10 +84,9 @@ dependencies {
     implementation("network.particle:connect-phantom-adapter:$sdkVersion")
     implementation("network.particle:connect-wallet-connect-adapter:$sdkVersion")
     implementation("network.particle:connect-auth-core-adapter:$sdkVersion")
+    implementation("network.particle:api-service:$sdkVersion")
 
     implementation("network.particle:wallet-service:$sdkVersion")
-
-    //if you want to use biconomy service,please add this dependency
     implementation("network.particle:aa-service:$sdkVersion")
 
 
