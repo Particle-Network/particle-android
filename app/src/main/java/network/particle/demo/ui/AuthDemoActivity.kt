@@ -49,7 +49,7 @@ import network.particle.demo.utils.ParticleInitUtils
 import network.particle.demo.utils.StreamUtils
 import network.particle.demo.utils.TransactionMock
 
-
+@Deprecated("use AuthCore")
 class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.activity_auth_demo) {
 
     override fun initView() {
@@ -257,7 +257,7 @@ class AuthDemoActivity : DemoBaseActivity<ActivityAuthDemoBinding>(R.layout.acti
 
         // If you login to solana, you do not have an evm wallet address, you need to call this method to switch to the evm chain, this method will create an evm wallet
         binding.setChainInfoSync.setOnClickListener {
-            ParticleNetwork.switchChain(ChainInfo.EthereumGoerli, object : ResultCallback {
+            ParticleNetwork.switchChain(ChainInfo.Ethereum, object : ResultCallback {
                 override fun success() {
                     showMessageDialog(getString(R.string.pn_set_chaininfo_sync), "success")
                 }

@@ -2,6 +2,7 @@ package network.particle.demo.utils
 
 import android.app.Application
 import android.content.Context
+import auth.core.adapter.AuthCoreAdapter
 import com.evm.adapter.EVMConnectAdapter
 import com.particle.base.*
 import com.particle.base.model.DAppMetadata
@@ -13,7 +14,7 @@ import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
 import com.wallet.connect.adapter.*
 import network.particle.chains.ChainInfo
-import network.particle.chains.ChainInfo.Companion.PolygonMumbai
+import network.particle.chains.ChainInfo.Companion.Polygon
 import particle.auth.adapter.ParticleConnectAdapter
 
 object ParticleInitUtils {
@@ -32,9 +33,10 @@ object ParticleInitUtils {
             description = "Particle Connect is a decentralized wallet connection protocol that makes it easy for users to connect their wallets to your DApp.",
         )
         ParticleConnect.init(
-            app, Env.PRODUCTION, chainInfo, dAppMetadata
+            app, Env.PRODUCTION, chainInfo
         ) {
             listOf(
+                AuthCoreAdapter(),
                 ParticleConnectAdapter(),
                 MetaMaskConnectAdapter(),
                 RainbowConnectAdapter(),
@@ -68,10 +70,10 @@ object ParticleInitUtils {
         //enable AA-4337 mode
         ParticleNetwork.initAAMode(
             mapOf(
-                PolygonMumbai.id to "your key",
+                Polygon.id to "your key",
             )
         )
         ParticleNetwork.setAAService(BiconomyV2AAService)
-        ParticleNetwork.getAAService().enableAAMode()
+//        ParticleNetwork.getAAService().enableAAMode()
     }
 }

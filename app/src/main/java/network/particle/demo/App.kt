@@ -9,7 +9,6 @@ import network.particle.demo.utils.ParticleInitUtils
 
 
 class App : Application() {
-    var isDebug = false
 
     override fun onCreate() {
         super.onCreate()

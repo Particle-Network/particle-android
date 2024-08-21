@@ -81,7 +81,24 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!-- Particle AuthCore Start -->
+        <activity
+            android:name="com.particle.auth.controller.AuthCoreWebActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/ThemeAuthWeb">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="ac${PN_APP_ID}" />
+            </intent-filter>
+        </activity>
+        <!-- Particle AuthCore End -->
         <!-- Particle Connect Redirect Callback -->
         <activity
             android:name="com.connect.common.controller.RedirectActivity"
@@ -111,6 +128,7 @@
             android:name="particle.network.project_id"
             android:value="${PN_PROJECT_ID}" />
 
+        <activity android:name="network.particle.demo.ui.AuthCoreActivity" />
         <activity android:name="network.particle.demo.ui.AuthDemoActivity" />
         <activity android:name="network.particle.demo.ui.ApiDemoActivity" />
         <activity android:name="network.particle.demo.ui.WalletDemoActivity" />

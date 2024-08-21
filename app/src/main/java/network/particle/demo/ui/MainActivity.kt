@@ -26,7 +26,7 @@ class MainActivity : DemoBaseActivity<ActivityMainBinding>(R.layout.activity_mai
     override fun setListeners() {
         super.setListeners()
         binding.btAuthDemo.setOnClickListener {
-            startActivity(Intent(this, AuthDemoActivity::class.java))
+            startActivity(Intent(this, AuthCoreActivity::class.java))
         }
         binding.btApiDemo.setOnClickListener {
             startActivity(Intent(this, ApiDemoActivity::class.java))

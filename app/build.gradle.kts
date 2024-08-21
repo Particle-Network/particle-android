@@ -8,11 +8,11 @@ val sdkVersion = libs.versions.connect.get()
 
 android {
 
-    compileSdk = libs.versions.compileSdkTiramisu.get().toInt()
+    compileSdk = 33
     defaultConfig {
         applicationId = "network.particle.demos"
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdkTiramisu.get().toInt()
+        targetSdk = 33
         versionCode = 5
         versionName = "$sdkVersion"
         vectorDrawables {
@@ -74,6 +74,7 @@ dependencies {
     }
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
     implementation("network.particle:auth-service:$sdkVersion")
+    implementation("network.particle:auth-core:$sdkVersion")
     implementation("network.particle:api-service:$sdkVersion")
 
 
