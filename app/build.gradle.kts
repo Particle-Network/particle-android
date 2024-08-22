@@ -3,7 +3,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
 }
-val sdkVersion = "2.0.9"
+val sdkVersion = "2.0.11"
 
 
 android {
@@ -76,7 +76,6 @@ dependencies {
         }
     }
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
-    val sdkVersion = "2.0.7"
     implementation("network.particle:connect:$sdkVersion")
     implementation("network.particle:connect-kit:$sdkVersion")
     implementation("network.particle:connect-evm-adapter:$sdkVersion")

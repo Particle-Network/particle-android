@@ -24,7 +24,6 @@ object ParticleInitUtils {
 
     fun initConnect(app: Application, chainInfo: ChainInfo) {
         val dAppMetadata = DAppMetadata(
-            "f431aaea6e4dea6a669c0496f9c009c1",
             "Particle Connect",
             "https://connect.particle.network/icons/512.png",
             "https://particle.network",
